@@ -38,9 +38,6 @@ We welcome contributions from the community! If you have ideas for improvements 
 
 If you encounter any issues or have suggestions, please [open an issue](https://github.com/your-username/the-herd-app/issues).
 
-## License
-
-"The Herd" app is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
