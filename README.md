@@ -1,4 +1,4 @@
-# The Herd - Party Enthusiast's Ultimate Hub
+# The Herd - Best Russian-Speaking Vancouver Parties
 
 ## Overview
 
