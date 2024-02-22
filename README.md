@@ -22,18 +22,6 @@ Beyond ticket sales, "The Herd" app becomes a living archive of each event's bes
 
 The blog section is a dynamic, visually rich repository of photos and videos, capturing the essence of "The Herd" parties. This feature not only enhances the sense of community among attendees but also serves as a tantalizing preview for those considering joining the next bash.
 
-## Getting Started
-
-To get started with "The Herd" app, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/your-username/the-herd-app.git`
-2. Install dependencies: `npm install`
-3. Run the app: `npm start`
-
-## Contributing
-
-We welcome contributions from the community! If you have ideas for improvements or new features, feel free to submit a pull request.
-
 ## Issues
 
 If you encounter any issues or have suggestions, please [open an issue](https://github.com/your-username/the-herd-app/issues).
