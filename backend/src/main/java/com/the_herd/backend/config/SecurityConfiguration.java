@@ -31,12 +31,6 @@ public class SecurityConfiguration {
                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/swagger-ui/index.html", true)
-                                .permitAll()
-                )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
