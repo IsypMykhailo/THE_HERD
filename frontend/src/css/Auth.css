@@ -1,0 +1,78 @@
+.parent-div {
+    background-color: #121416;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.sign-up-div {
+    width: 50%;
+    height: 100%;
+}
+
+.form {
+    width: 50%;
+}
+
+.title {
+    letter-spacing: -0.2px;
+    color: #fdfeff;
+    font-weight: 500;
+}
+
+.company-name {
+    letter-spacing: -0.2px;
+    color: #fdfeff;
+    font-weight: 700;
+    font-size: 24px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.text {
+    color: #fdfeff;
+}
+
+.party-image-parent {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.party-image {
+    height: 100%;
+}
+
+.form-input, .form-input:focus {
+    padding: 0.8rem;
+    background-color: #242628;
+    color: #fdfeff;
+    border-width: 0.5px;
+    border-color: rgba(253, 254, 255, 0.05);
+}
+
+.form-input::placeholder {
+    color: rgba(253, 254, 255, 0.4);
+}
+
+.btn-submit {
+    padding: 0.8rem;
+    background-color: #8b3c7e;
+    border-color: rgba(139, 60, 126, 0.05);
+}
+
+.btn-submit:hover {
+    background-color: rgba(139, 60, 126, 0.7);
+    border-color: rgba(139, 60, 126, 0.05);
+}
+
+.login-button {
+    color: rgba(253, 254, 255, 0.4);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
