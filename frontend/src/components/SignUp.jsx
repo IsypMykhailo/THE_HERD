@@ -13,9 +13,13 @@ const SignUp = ({
                     handleRegister,
                     setIsLogin
                 }) => {
+    const [isSubmitDisabled, setIsSubmitDisabled] = React.useState(true);
     React.useEffect(() => {
-        console.log(firstName, lastName)
-    }, [firstName, lastName]);
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const isFormValid = firstName !== '' && lastName !== '' && email !== '' && password !== '' && emailField.validity.valid && passwordField.validity.valid;
+        setIsSubmitDisabled(!isFormValid);
+    }, [firstName, lastName, email, password]);
 
     return (
         <form onSubmit={handleRegister} className={"form"}>
@@ -26,6 +30,7 @@ const SignUp = ({
                     className={"form-control form-input"}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    required={true}
                 />
             </div>
             <div className={"my-4 mx-3"}>
@@ -35,28 +40,35 @@ const SignUp = ({
                     className={"form-control form-input"}
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    required={true}
                 />
             </div>
             <div className={"my-4 mx-3"}>
                 <input
+                    id={"email"}
                     placeholder={"Email"}
                     type={"email"}
                     className={"form-control form-input"}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required={true}
                 />
             </div>
             <div className={"my-4 mx-3"}>
                 <input
+                    id={"password"}
                     placeholder={"Password"}
                     type={"password"}
                     className={"form-control form-input"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    minLength="8"
+                    required={true}
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 />
             </div>
             <div className={"text-center my-4 mx-3 d-flex flex-column"}>
-                <button type={"submit"} className={"btn btn-primary btn-submit mb-3"}>Create an account</button>
+                <button type={"submit"} className={"btn btn-submit mb-3"} disabled={isSubmitDisabled}>Create an account</button>
                 <a onClick={() => setIsLogin(true)} className={"login-button"}>Already have an account?</a>
             </div>
         </form>
