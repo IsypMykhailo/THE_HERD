@@ -2,6 +2,7 @@ package com.the_herd.backend.controllers.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
     private final AuthenticationService service;
+    private final UserDetailsService userDetailsService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -28,5 +30,12 @@ public class AuthenticationController {
     ) {
         System.out.println("Auth");
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @PostMapping("/validateSession")
+    public ResponseEntity<ValidationResponse> validateSession(
+            @RequestBody ValidationRequest request
+    ) {
+        return ResponseEntity.ok(service.validateSession(request));
     }
 }
