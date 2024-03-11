@@ -22,7 +22,7 @@ const Auth = () => {
             const token = Cookies.get('token')
             const email = Cookies.get('email')
             const password = Cookies.get('password')
-            if (token === undefined || email === undefined || password === undefined) {
+            if (token === '' || email === '' || password === '' || token === undefined || email === undefined || password === undefined) {
                 setLoading(false);
                 return;
             }

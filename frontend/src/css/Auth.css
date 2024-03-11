@@ -63,11 +63,13 @@
     padding: 0.8rem;
     background-color: #8b3c7e;
     border-color: rgba(139, 60, 126, 0.05);
+    color: #fdfeff;
 }
 
-.btn-submit:hover {
+.btn-submit:hover, .btn-submit:disabled {
     background-color: rgba(139, 60, 126, 0.7);
     border-color: rgba(139, 60, 126, 0.05);
+    color: rgba(253, 254, 255, 0.7);
 }
 
 .login-button {
