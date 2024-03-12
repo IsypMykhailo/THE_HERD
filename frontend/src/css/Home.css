@@ -373,7 +373,7 @@
     position: absolute; 
     top: 0; 
     right: 0; 
-    background: blue;
+    background: rgb(16, 16, 208);
     color: white;
     padding: 0.5rem 0;
     font-size: 5rem;
