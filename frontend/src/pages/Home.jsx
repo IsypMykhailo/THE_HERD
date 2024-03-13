@@ -109,7 +109,7 @@ const Home = () => {
                                     </div>
                                 ) : (
                                     <div className={"login-nav-button"} onClick={() => navigate('/authenticate')}>
-                                        <a className="nav-link-text" href="/authenticate">Login</a>
+                                        <span className="nav-link-text">Login</span>
                                     </div>
                                 )}
                             </div>
