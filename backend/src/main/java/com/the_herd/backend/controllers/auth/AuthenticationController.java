@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://65f1206390c57b83db79643e--the-herd.netlify.app\n")
+@CrossOrigin(origins = "https://the-herd.netlify.app/")
 public class AuthenticationController {
     private final AuthenticationService service;
     private final UserDetailsService userDetailsService;
