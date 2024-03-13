@@ -32,7 +32,7 @@ const Home = () => {
                 token: token
             }
             try {
-                const response = await fetch("http://localhost:8080/api/v1/auth/validateSession", {
+                const response = await fetch("https://the-herd.onrender.com/api/v1/auth/validateSession", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
