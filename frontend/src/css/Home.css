@@ -1,0 +1,427 @@
+/*NAVBAR*/
+
+/*NAVIGATION BAR -- STAUS: DONE! DO NOT CHANGE*/
+.nav-title {
+    letter-spacing: -0.2px;
+    color: #fdfeff;
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0;
+}
+.nav-link-text {
+    color: #fdfeff;
+    text-decoration: none;
+}
+.nav-link-text:hover {
+    color: rgba(253, 254, 255, 0.7);
+}
+.navbar {
+    background: #8b3c7e;
+    padding-right: 5%; /* Use percentage instead of fixed pixels */
+    padding-left: 5%; /* Use percentage instead of fixed pixels */
+    display: flex;
+    justify-content: center;
+}
+
+.navdiv {
+    background-color: #121416;
+    height: 75px;
+}
+
+.logo {
+    border-radius: 12px;
+}
+
+.nav-logo {
+    width: 100px;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+}
+
+li a {
+    color: #fdfeff;
+    font-size: 1.5vw; /* Use viewport width for responsive font size */
+    font-weight: bold;
+    margin-right: 2vw; /* Use viewport width for responsive margin */
+}
+
+.btn-design {
+    background-color: #56244e;
+    margin-left: 1vw; /* Use viewport width for responsive margin */
+    border-radius: 100px;
+    padding: 1vw 2vw; /* Use viewport width for responsive padding */
+}
+.login-nav-button {
+    border-radius: 16px;
+    padding: 8px 16px;
+    background-color: #8b3c7e;
+}
+.login-nav-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+.login-nav-button .nav-link-text {
+    color: #fdfeff;
+}
+
+/*Text inside the buttons*/
+.btn-design a {
+    color: #fdfeff;
+    font-weight: bold;
+    font-size: 1vw; /* Use viewport width for responsive font size */
+}
+
+
+
+/*CONTAINER 1 --> First section DONE DO NOT CHANGE!*/
+.container1 {
+    position: relative;
+    background-color: #121416;
+}
+
+.textBlock1 {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw; /* Use viewport width for responsive padding */
+    padding-right: 5vw; /* Use viewport width for responsive padding */
+    text-align: center;
+}
+
+.textBlock1 h1 {
+    font-size: 5vw; /* Use viewport width for responsive font size */
+    margin: 0; /* Remove margin on all sides */
+    letter-spacing: 0.3em;
+    font-weight: bolder;
+}
+
+.S1-text {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+    right:0.2%;
+}
+
+.S1-text p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+}
+
+.S1-text2 {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.S1-text2 p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+}
+
+.S1-text3 {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+    left: 67%;
+}
+
+.S1-text3 p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+    color: rgb(242, 94, 1);
+}
+
+
+
+/*Container 2 --> About DONE DO NOT CHANGE!*/
+.sectionContainer {
+    margin-top: 50px; /* Adjust margin-top as needed */
+    padding-top: 0;
+}
+
+.block2 {
+    margin-top: 0;
+    padding-left: 5vw; /* Use viewport width for responsive padding */
+    padding-right: 5vw; /* Use viewport width for responsive padding */
+    text-align: center;
+}
+
+.textBlock2 {
+}
+
+.sec234header {
+    height: 30px;
+    padding-right: 84%;
+    padding-top: 20px;
+}
+
+.sec234header li {
+    font-size: 1.5vw; /* Use viewport width for responsive font size */
+    font-weight: bolder;
+    color: white;
+    margin: 0;
+    margin-left: 0vw;
+    margin-bottom: 90px; /* Adjust the margin as needed */
+    background-color: #8b3c7e;
+    border: 1px solid #3d194d;
+    padding: 0% 1%;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-radius: 10px;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    border-radius: 20px;
+    margin-top: -1rem;
+}
+
+.con2statsContainer {
+    padding: 20px;
+    position: relative; /* Make the container relative for absolute positioning */
+    left: -10%; /* Adjust the left value as needed */
+}
+
+.con2stats {
+    margin-top: 0%;
+    padding-top: 10px; /* Add unit to the padding value */
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-left: 5vw; /* Use viewport width for responsive padding */
+    padding-right: 5vw; /* Use viewport width for responsive padding */
+    text-align: center;
+}
+
+.list-item-container {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin-right: 20px;
+}
+
+.additional-text-box {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 2em;
+    font-weight:900;
+    letter-spacing: 0.1em;
+    color: #fdfeff;
+}
+
+
+.con2stats li {
+    display: inline-block;
+    position: relative;
+    font-size: 1.3vw;
+    font-weight: bolder;
+    color: white;
+    background-color: #8b3c7e;
+    padding: 1% 2% !important;
+    padding-top: 0.2%;
+    padding-bottom: 0.2%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    top: 25px;
+}
+
+.sec2paragraph {
+    position: absolute;
+    top: -22px;
+    width: 20vw;
+    max-height: 70px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    left: calc(100% + 30px); /* Adjust the distance from 'Satisfied Clients' */
+    font-size: 1vw; /* Use viewport width for responsive font size */
+    color: white;
+}
+
+.block2 img {
+    width: 70%;
+    display: block;
+    margin: auto;
+    border-radius: 40px;
+}
+
+.S2-text {
+    position: absolute;
+    bottom: -79%;
+    left: 55%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+    right:0.2%;
+}
+
+.S2-text p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+}
+
+.S2-text2 {
+    position: absolute;
+    bottom: -84%;
+    left: 63.5%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.S2-text2 p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+}
+
+.S2-text3 {
+    position: absolute;
+    bottom: -89%;
+    transform: translateX(-50%);
+    color: rgb(100, 14, 176);
+    padding-left: 5vw;
+    padding-right: 5vw;
+    left: 55%;
+    padding-top: 5px;
+
+}
+
+.S2-text3 p {
+    text-align: left;
+    font-size: 2vw;
+    font-weight: bolder;
+    letter-spacing: 0.3em;
+    color: rgb(242, 94, 1);
+}
+
+/*Container 3 --> Special Tickets DONE DO NOT CHANGE*/
+
+.heading{ /*Styling for the Section Title*/
+    text-align: left;
+    padding-left: 3.2rem;
+    color: #fdfeff;
+    font-size: 50px;
+    font-weight: bolder;
+    letter-spacing: 0.15em;
+    margin-top: -3px;
+}
+
+.sectionContainer .block2 .textBlock2 p{ /*Styling for the paragraph below the Section Title*/
+    width: 92.5%;
+    overflow: auto;
+    font-size: 1.2rem;
+    color: white;
+    text-align: left;
+    margin-top: -20px;
+    height: 10rem;
+    margin-bottom: 1.5rem;
+    padding-left: 3.5rem;
+}
+
+.tickets .box-container { /*Styling that defines the layout for a container that holds all the ticket boxes. It lets me put them in a grid system!*/
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
+    gap: 1.5rem;
+}
+
+.tickets .box-container .box { /*Restricts the sizing of the button inside*/
+    position: relative; /* Add position relative */
+    padding: 2rem 0;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.tickets .box-container .box .box-text { /* Sets the dimensions of the button */
+    height: 100%;
+    width:85%;
+    border-radius: 20px;
+    background-color: #8b3c7e;
+}
+
+.tickets .box-container .box:hover { /*Hover effect*/
+    transform: scale(1.03);
+}
+
+.tickets .box-container .box .amount { /*Styling for the price number*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    padding: 0.5rem 0;
+    font-size: 5rem;
+    font-weight: bolder;
+    padding-right: 9.5rem;
+    padding-top: 3.5rem;
+}
+
+.tickets .box-container .box .title { /*Styling for the title of the ticket --> the one in BIG lettering*/
+    color: white;
+    padding-top: 0px;
+    font-size: 3.5rem;
+    margin-top: -1.3rem;
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.tickets .box-container .box ul { /*Styling and positioning of the ticket details*/
+    color: white;
+    padding-top: 0px;
+    font-size: 1rem;
+    text-align: left;
+    list-style: none; /* Removes default list style */
+    column-count: 2; /* Splits list items into two columns */
+    column-gap: 20px; /* Adds space between columns */
+}
+
+.tickets .box-container .box ul li::before { /*Styling for the checkmarks beside each ticket detail*/
+    content: "\2713"; /* Unicode character for checkmark */
+    color: rgb(255, 255, 255); /* Color of the checkmark */
+    margin-right: 5px; /* Add some spacing between the checkmark and the text */
+}
+
+.tickets .box-container .box ul li { /*Sets each ticket detail as a block --> makes it easier to position them*/
+    display: block; /* Ensure list items are displayed as blocks */
+    margin-bottom: 10px; /* Add some space between list items */
+}
+
+.tickets .box-container .box .box-text .ticket-type { /*Styling for the sub header of the tickets --> smaller and on top of the Title*/
+    text-align: left;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding-top: 2.5rem;
+    cursor: pointer;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    padding-left: 2rem;
+}
