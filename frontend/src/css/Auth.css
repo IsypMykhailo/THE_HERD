@@ -23,7 +23,7 @@
 }
 
 .company-name {
-    letter-spacing: -0.2px;
+    letter-spacing: 4px;
     color: #fdfeff;
     font-weight: 700;
     font-size: 24px;
@@ -53,6 +53,7 @@
     color: #fdfeff;
     border-width: 0.5px;
     border-color: rgba(253, 254, 255, 0.05);
+    border-radius: 0;
 }
 
 .form-input::placeholder {
@@ -64,6 +65,7 @@
     background-color: #8b3c7e;
     border-color: rgba(139, 60, 126, 0.05);
     color: #fdfeff;
+    border-radius: 0;
 }
 
 .btn-submit:hover, .btn-submit:disabled {
