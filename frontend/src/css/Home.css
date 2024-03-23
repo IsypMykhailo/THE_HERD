@@ -266,6 +266,13 @@ html {
         line-height: 50px;
         width: 70%;
     }
+    .hero-container {
+        height: 80vh;
+    }
+
+    .hero-image-container {
+        height: 80vh;
+    }
 
     /* EVENTS */
     .event-name {
