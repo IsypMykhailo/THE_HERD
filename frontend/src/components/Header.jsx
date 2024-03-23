@@ -1,53 +1,93 @@
 import '../css/Home.css';
+import React, {useState} from "react";
+import Cookies from "js-cookie";
 
-const Header = ({isLoggedIn, navigate, logOut}) => {
+const Header = ({setLoading, navigate}) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const logOut = () => {
+        Cookies.set('token', '');
+        Cookies.set('email', '');
+        Cookies.set('password', '');
+        window.location.reload();
+    }
+
+    React.useEffect(() => {
+
+        const validateSession = async () => {
+            setLoading(true);
+            const token = Cookies.get('token')
+            const email = Cookies.get('email')
+            const password = Cookies.get('password')
+            if (token === '' || email === '' || password === '' || token === undefined || email === undefined || password === undefined) {
+                setLoading(false);
+                return;
+            }
+            const payload = {
+                email: email,
+                password: password,
+                token: token
+            }
+            try {
+                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200 && data.valid === true) {
+                    setIsLoggedIn(true);
+                    setLoading(false);
+                } else if (response.status === 200 && data.valid === false) {
+                    setIsLoggedIn(false);
+                    setLoading(false);
+                } else if(response.status === 403) {
+                    Cookies.set('token', '');
+                    Cookies.set('email', '');
+                    Cookies.set('password', '');
+                    setLoading(false);
+                }
+                else {
+                    console.error('Failed to submit form', await response.text());
+                }
+            } catch (error) {
+                console.error('Failed to submit form', error);
+            }
+        }
+
+        validateSession();
+    }, []);
     return (
         <div
-            className="d-flex flex-row align-items-start justify-content-between position-fixed overflow-hidden"
-            style={{mixBlendMode: "difference", paddingLeft: 20, paddingRight: 20, paddingTop: 25, zIndex: 999, width: '100%'}}>
+            className="d-flex flex-row align-items-start justify-content-between position-fixed overflow-hidden navbar-container">
             <div className="d-flex flex-column gap-3 align-items-start justify-content-start">
                 {isLoggedIn ? (
                     <div className="bg-white p-2 d-flex flex-row gap-2 align-items-start justify-content-start nav-btn"
                          onClick={logOut}>
-                        <div className="text-black text-start" style={{
-                            fontSize: '0.875rem',
-                            fontWeight: '600',
-                            textTransform: 'uppercase'
-                        }}>
+                        <div className="text-black text-start login-btn">
                             Log out
                         </div>
                     </div>
                 ) : (
                     <div className="bg-white p-2 d-flex flex-row gap-2 align-items-start justify-content-start nav-btn"
                          onClick={() => navigate('/authenticate')}>
-                        <div className="text-black text-start" style={{
-                            fontSize: '0.875rem',
-                            fontWeight: '600',
-                            textTransform: 'uppercase'
-                        }}>
+                        <div className="text-black text-start login-btn">
                             Log in
                         </div>
                     </div>
                 )}
-                <div className="text-white text-start nav-btn" style={{
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    textTransform: 'uppercase'
-                }}>
+                <div className="text-white text-start nav-btn"
+                     onClick={() => navigate('/')}>
                     Home
                 </div>
-                <div className="text-white text-start nav-btn" style={{
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    textTransform: 'uppercase'
-                }}>
+                <div className="text-white text-start nav-btn"
+                     onClick={() => navigate('/blog')}>
                     Blog
                 </div>
-                <div className="text-white text-start nav-btn" style={{
-                    fontSize: '0.875rem',
-                    fontWeight: '600',
-                    textTransform: 'uppercase'
-                }}>
+                <div className="text-white text-start nav-btn">
                     Tickets
                 </div>
             </div>

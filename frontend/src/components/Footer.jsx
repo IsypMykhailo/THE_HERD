@@ -2,10 +2,9 @@ import '../css/Home.css';
 
 const Footer = () => {
     return (
-        <div className="bg-black p-4 d-flex flex-row align-items-center justify-content-between position-relative"
-             style={{overflow: 'hidden'}}>
+        <div className="bg-black p-4 footer-container">
             <svg
-                style={{flexShrink: 0, width: '290px', height: '36px'}}
+                className={"footer-logo"}
                 viewBox="0 0 291 36"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -42,29 +41,11 @@ const Footer = () => {
             <div className="d-flex flex-row" style={{gap: '55px'}}>
                 <div
                     className={"footer-link"}
-                    style={{
-                    color: '#ffffff',
-                    textAlign: 'left',
-                    fontSize: '24px',
-                    lineHeight: '25px',
-                    fontWeight: '600',
-                    marginRight: 64,
-                    cursor:'pointer'
-                }}
                      onClick={() => window.location.href = 'https://www.instagram.com/the_herd_van/'}>
                     Instagram
                 </div>
                 <div
                     className={"footer-link"}
-                    style={{
-                    color: '#ffffff',
-                    textAlign: 'left',
-                    fontSize: '24px',
-                    lineHeight: '25px',
-                    fontWeight: '600',
-                    marginRight: 64,
-                    cursor:'pointer'
-                }}
                      onClick={() => window.location.href = 'https://t.me/the_herd32'}>
                     Telegram
                 </div>
