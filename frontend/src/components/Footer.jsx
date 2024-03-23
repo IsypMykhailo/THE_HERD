@@ -40,24 +40,32 @@ const Footer = () => {
                 />
             </svg>
             <div className="d-flex flex-row" style={{gap: '55px'}}>
-                <div style={{
+                <div
+                    className={"footer-link"}
+                    style={{
                     color: '#ffffff',
                     textAlign: 'left',
                     fontSize: '24px',
                     lineHeight: '25px',
                     fontWeight: '600',
-                    marginRight: 64
-                }}>
+                    marginRight: 64,
+                    cursor:'pointer'
+                }}
+                     onClick={() => window.location.href = 'https://www.instagram.com/the_herd_van/'}>
                     Instagram
                 </div>
-                <div style={{
+                <div
+                    className={"footer-link"}
+                    style={{
                     color: '#ffffff',
                     textAlign: 'left',
                     fontSize: '24px',
                     lineHeight: '25px',
                     fontWeight: '600',
-                    marginRight: 64
-                }}>
+                    marginRight: 64,
+                    cursor:'pointer'
+                }}
+                     onClick={() => window.location.href = 'https://t.me/the_herd32'}>
                     Telegram
                 </div>
             </div>

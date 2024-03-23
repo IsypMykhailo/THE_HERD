@@ -1,6 +1,10 @@
 body {
     font-family: 'Inter', sans-serif;
 }
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #242628 #121416;
+}
 
 /*NAVBAR*/
 
@@ -83,6 +87,14 @@ li a {
     color: #fdfeff;
     font-weight: bold;
     font-size: 1vw; /* Use viewport width for responsive font size */
+}
+
+.footer-link {
+    transition: 0.2s;
+}
+
+.footer-link:hover {
+    opacity: 80%;
 }
 
 
