@@ -3,10 +3,6 @@ package com.the_herd.backend.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- * @author tola on 4/9/20
- **/
-
 @Controller
 public class AdminPageController {
 
