@@ -6,7 +6,7 @@ const Events = () => {
             <div style={{ color: '#ffffff', textAlign: 'left', fontSize: '1.25rem', fontWeight: '600', textTransform: 'uppercase' }}>
                 Upcoming{" "}
             </div>
-            <div className="d-flex flex-row" style={{ gap: '23px' }}>
+            <div className="d-flex flex-row" style={{ gap: '23px', overflowX: 'scroll', scrollbarWidth: "none" }}>
                 {[...Array(3)].map((_, index) => (
                     <div key={index} className="bg-white" style={{ width: '350px', height: '100px', position: 'relative', overflow: 'hidden' }}>
                         <svg

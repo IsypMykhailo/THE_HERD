@@ -54,7 +54,7 @@ const Hosts = () => {
 
             <div className="bg-black row" style={{position: 'relative', overflow: 'hidden'}}>
                 <div className="overflow-hidden col"
-                     style={{background: 'rgba(255,255,255,0.10)'}}></div>
+                     style={{backgroundImage: 'url(/assets/img/konstantin-photo.JPG)', backgroundSize: 'cover'}}></div>
                 <div className={"col d-flex flex-column justify-content-center align-items-end"} style={{aspectRatio: '1/1'}}>
                     <div style={{
                         display: 'flex',
