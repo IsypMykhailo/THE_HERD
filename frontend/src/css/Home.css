@@ -12,6 +12,13 @@ body {
     font-size: 24px;
     margin: 0;
 }
+.nav-btn {
+    cursor: pointer;
+    transition: 0.2s;
+}
+.nav-btn:hover {
+    opacity: 80%;
+}
 .nav-link-text {
     color: #fdfeff;
     text-decoration: none;
