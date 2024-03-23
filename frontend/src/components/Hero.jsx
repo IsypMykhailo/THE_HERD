@@ -2,30 +2,13 @@ import '../css/Home.css';
 
 const Hero = () => {
     return (
-        <div style={{height: '90vh', position: 'relative', overflow: 'hidden', minHeight: '600px'}}>
-            <div className="bg-black" style={{
-                height: '90vh',
-                minHeight: '600px',
-                overflow: 'hidden',
-                paddingLeft: 20,
-                backgroundImage: 'url(/assets/img/party-photo.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                opacity: 0.6
-            }}>
-
+        <div className={"hero-container"}>
+            <div className="bg-black hero-image-container"
+                 style={{
+                     backgroundImage: 'url(/assets/img/party-photo.jpg)',
+                 }}>
             </div>
-            <div style={{
-                color: '#ffffff',
-                textAlign: 'left',
-                fontSize: '82px',
-                lineHeight: '80px',
-                fontWeight: '600',
-                position: 'absolute',
-                bottom: 64,
-                width: '30%',
-                marginLeft: 20
-            }}>
+            <div className={"hero-label"}>
                 Party that never ends.
             </div>
         </div>

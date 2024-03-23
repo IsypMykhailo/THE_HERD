@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import Blog from "./pages/Blog";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/authenticate" element={<Auth/>}/>
+                        <Route path="/blog" element={<Blog/>}/>
                     </Routes>
                 </div>
             </Router>
