@@ -62,7 +62,7 @@ const Header = ({setLoading}) => {
         }
 
         validateSession();
-    }, []);
+    }, [setLoading]);
     return (
         <div
             className="flex flex-row items-start justify-between fixed overflow-hidden navbar-container">

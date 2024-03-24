@@ -51,6 +51,7 @@
 
 .party-image {
     height: 100%;
+    width: auto;
 }
 
 .form-input, .form-input:focus {

@@ -7,19 +7,17 @@ import {useLenis} from "@studio-freight/react-lenis";
 import gsap from 'gsap'
 
 // TODO: Fix the Gallery to allow correct horizontal scrolling
-const Gallery = ({setLoading}) => {
+const Gallery = () => {
     const [gallery, setGallery] = useState([]);
     const galleryRef = useRef(null)
     const timelineRef = useRef(null)
     const spacerRef = useRef(null)
 
     useEffect(() => {
-        setLoading(true);
         fetch('/gallery.json')
             .then((response) => response.json())
             .then((data) => {
                 setGallery(data)
-                setLoading(false)
 
             })
             .catch((error) => console.error("Fetching blogs failed:", error));
