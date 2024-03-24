@@ -153,7 +153,7 @@ const Auth = () => {
                 <div className={"container-fluid d-flex flex-row parent-div"}>
 
                     <div className={"party-image-parent"}>
-                        <h2 className={"company-name"}>THE HERD</h2>
+                        <h2 className={"company-name"} onClick={() => navigate("/")}>THE HERD</h2>
                         <img src={"/assets/img/party-photo.jpg"} alt={"party-photo"} className={"party-image"}/>
                     </div>
                     <div

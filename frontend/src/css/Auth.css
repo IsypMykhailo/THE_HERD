@@ -30,6 +30,12 @@
     position: absolute;
     top: 30px;
     left: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.company-name:hover {
+    opacity: 70%;
 }
 
 .text {
@@ -79,4 +85,27 @@
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
+}
+
+@media (max-width: 1300px){
+    .party-image{
+        display:none;
+    }
+
+    .party-image-parent {
+        position: absolute;
+    }
+
+    .parent-div {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .sign-up-div {
+        width: 100%;
+    }
+
+    .form {
+        width: 80%;
+    }
 }
