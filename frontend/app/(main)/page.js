@@ -13,19 +13,19 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-      loading ?
-          (
-              <div className={"container-fluid d-flex flex-row justify-content-center align-items-center parent-div"}>
-                <MutatingDots
-                    color="#8b3c7e"
-                    secondaryColor={"#8b3c7e"}
-                    height={100}
-                    width={100}
-                />
-              </div>
-          )
-          :
-          (
+      // loading ?
+      //     (
+      //         <div className={"container-fluid d-flex flex-row justify-content-center align-items-center parent-div"}>
+      //           <MutatingDots
+      //               color="#8b3c7e"
+      //               secondaryColor={"#8b3c7e"}
+      //               height={100}
+      //               width={100}
+      //           />
+      //         </div>
+      //     )
+      //     :
+      //     (
               <div>
                 <Header
                     setLoading={setLoading}
@@ -35,7 +35,7 @@ const Home = () => {
                 <Hosts></Hosts>
                 <Footer></Footer>
               </div>
-          )
+          // )
   );
 }
 

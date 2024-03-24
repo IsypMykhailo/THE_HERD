@@ -141,19 +141,19 @@ const Auth = () => {
     }
 
     return (
-        loading ?
-            (
-                <div className={"w-full flex flex-row justify-center items-center parent-div"}>
-                    <MutatingDots
-                        color="#8b3c7e"
-                        secondaryColor={"#8b3c7e"}
-                        height={100}
-                        width={100}
-                    />
-                </div>
-            )
-            :
-            (
+        // loading ?
+        //     (
+        //         <div className={"w-full flex flex-row justify-center items-center parent-div"}>
+        //             <MutatingDots
+        //                 color="#8b3c7e"
+        //                 secondaryColor={"#8b3c7e"}
+        //                 height={100}
+        //                 width={100}
+        //             />
+        //         </div>
+        //     )
+        //     :
+        //     (
                 <div className={"w-full flex flex-row parent-div"}>
 
                     <div className={"party-image-parent"}>
@@ -194,7 +194,7 @@ const Auth = () => {
                         }
                     </div>
                 </div>
-            )
+            // )
 
     );
 }
