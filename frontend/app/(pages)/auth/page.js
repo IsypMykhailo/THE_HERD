@@ -8,6 +8,7 @@ import SignUp from "../../_components/SignUp";
 import Login from "../../_components/Login";
 import Cookies from 'js-cookie';
 import {MutatingDots} from 'react-loader-spinner';
+import Image from "next/image";
 
 const Auth = () => {
     const router = useRouter()
@@ -64,7 +65,7 @@ const Auth = () => {
         }
 
         validateSession();
-    }, []);
+    }, [router]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -157,7 +158,7 @@ const Auth = () => {
 
                     <div className={"party-image-parent"}>
                         <h2 className={"company-name"} onClick={() => router.push("/")}>THE HERD</h2>
-                        <img src={"/assets/img/party-photo.jpg"} alt={"party-photo"} className={"party-image object-cover"}/>
+                        <Image src={"/assets/img/party-photo.jpg"} alt={"party-photo"} width={0} height={0} unoptimized className={"party-image object-cover"}/>
                     </div>
                     <div
                         className={"w-full flex flex-col justify-center items-center sign-up-div"}>
