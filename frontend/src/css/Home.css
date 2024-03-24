@@ -78,6 +78,7 @@ html {
 .hosts-image {
     background-size: cover;
     width: 50%;
+    aspect-ratio: 1/1;
 }
 
 .hosts-info-container {
@@ -222,7 +223,7 @@ html {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
     /* HOSTS */
     .hosts-container {
         flex-direction: column;
@@ -231,7 +232,7 @@ html {
 
     .hosts-image {
         width: 100%;
-        height: 50vh;
+        /*height: 50vh;*/
     }
 
     .hosts-info-container {
