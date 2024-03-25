@@ -4,7 +4,7 @@ import {MutatingDots} from "react-loader-spinner";
 import Header from "../../_components/Header";
 import Footer from "../../_components/Footer";
 import React, {useState} from "react";
-import Gallery from "../../_components/Gallery";
+import Gallery from "../../_components/blog/Gallery";
 
 const Blog = () => {
     const [loading, setLoading] = useState(false);

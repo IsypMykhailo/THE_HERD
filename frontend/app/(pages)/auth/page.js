@@ -4,8 +4,8 @@
 import React, {useState} from 'react';
 import {useRouter} from "next/navigation";
 import '../../_css/Auth.css';
-import SignUp from "../../_components/SignUp";
-import Login from "../../_components/Login";
+import SignUp from "../../_components/auth/SignUp";
+import Login from "../../_components/auth/Login";
 import Cookies from 'js-cookie';
 import {MutatingDots} from 'react-loader-spinner';
 import Image from "next/image";
