@@ -1,0 +1,29 @@
+.blog-container {
+}
+
+/* GALLERY */
+.gallery-container {
+    background-color: #121416;
+    /*height: calc(100% - 84px);*/
+    height: 100vh;
+    min-width: 100vw;
+    width: max-content;
+}
+
+.gallery-entity {
+    height: 100vh;
+    width: 100%;
+}
+
+.gallery-title {
+    text-align: center;
+    font-size: 64px;
+    font-weight: 600;
+    color: #fdfeff
+}
+
+@media(max-width: 1300px) {
+    .gallery-container{
+        height: calc(100% - 66px);
+    }
+}
