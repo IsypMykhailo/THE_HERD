@@ -1,0 +1,8 @@
+[
+  { "id":  1, "type":  "image", "src": "/assets/blog/1.JPG"},
+  { "id":  2, "type":  "image", "src": "/assets/blog/2.JPG"},
+  { "id":  3, "type":  "image", "src": "/assets/blog/3.JPG"},
+  { "id":  3, "type":  "image", "src": "/assets/blog/3.JPG"},
+  { "id":  3, "type":  "image", "src": "/assets/blog/3.JPG"},
+  { "id":  3, "type":  "image", "src": "/assets/blog/3.JPG"}
+]

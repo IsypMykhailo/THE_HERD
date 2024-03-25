@@ -1,0 +1,327 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+/*html {*/
+/*    scrollbar-width: thin;*/
+/*    scrollbar-color: #242628 #121416;*/
+/*}*/
+
+/*NAVBAR*/
+.navbar-container {
+    mix-blend-mode: difference;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 25px;
+    z-index: 999;
+    width: 100%;
+    pointer-events: none;
+}
+
+.nav-btn {
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    pointer-events: auto;
+}
+.nav-btn:hover {
+    opacity: 70%;
+}
+
+.login-btn {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    pointer-events: auto;
+}
+
+
+/* FOOTER */
+.footer-link {
+    transition: 0.2s;
+    color: #fdfeff;
+    text-align: left;
+    font-size: 24px;
+    line-height: 25px;
+    font-weight: 600;
+    margin-right: 64px;
+    cursor: pointer;
+}
+
+.footer-link:hover {
+    opacity: 70%;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    height: 84px;
+}
+
+.footer-logo {
+    flex-shrink: 0;
+    height: 36px;
+}
+
+/* HOSTS */
+.hosts-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.hosts-image {
+    background-size: cover;
+    width: 50%;
+    aspect-ratio: 1/1;
+}
+
+.hosts-info-container {
+    aspect-ratio: 1/1;
+    width: 50%;
+    justify-content: center;
+}
+
+.hosts-info-second {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.hosts-label {
+    color: #fdfeff;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: auto;
+    margin-left: 20px;
+}
+
+.hosts-description-container {
+    gap: 42px;
+    width: 65%;
+    margin-top: 25%;
+    margin-bottom: 25%;
+}
+
+.hosts-name {
+    color: #fdfeff;
+    text-align: left;
+    font-size: 82px;
+    line-height: 80px;
+    font-weight: 600;
+}
+
+.hosts-description {
+    color: #fdfeff;
+    text-align: left;
+    font-size: 24px;
+    line-height: 25px;
+    font-weight: 600;
+}
+
+/* EVENTS */
+/*.event-container {*/
+/*    transition: 0.2s;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.event-container:hover {*/
+/*    opacity: 70%;*/
+/*}*/
+
+.event-info-container {
+    width: 250px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.event-name {
+    color: #000000;
+    text-align: left;
+    font-size: 1.5rem;
+    line-height: 25px;
+    font-weight: 600;
+    width: 50%;
+}
+
+.event-datetime-container {
+    gap: 0.5rem;
+    margin-top: 12px;
+}
+
+.event-date {
+    color: #000000;
+    text-align: left;
+    font-size: 1.25rem;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+.upcoming-events-container {
+    height: auto;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #8b3c7e;
+    overflow-x :auto;
+}
+
+.upcoming-label {
+    color: #fdfeff;
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.upcoming-events-carousel {
+    display: flex;
+    flex-direction: row;
+    gap: 23px;
+}
+
+/* HERO */
+.hero-container {
+    height: 90vh;
+    position: relative;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+.hero-image-container {
+    height: 90vh;
+    min-height: 600px;
+    overflow: hidden;
+    padding-left: 20px;
+    background-size: cover;
+    background-position: center;
+    opacity: 60%;
+}
+
+.hero-label {
+    color: #fdfeff;
+    text-align: left;
+    font-size: 82px;
+    line-height: 80px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 64px;
+    width: 30%;
+    margin-left: 20px;
+}
+
+
+
+
+@media (max-width: 1300px) {
+    /* HOSTS */
+    .hosts-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hosts-image {
+        width: 100%;
+        /*height: 50vh;*/
+    }
+
+    .hosts-info-container {
+        width: 100%;
+        order: 2;
+    }
+
+    .hosts-info-second {
+        align-items: flex-start;
+        margin-left: 36px;
+        margin-right: 0;
+    }
+
+    .hosts-label {
+        font-size: 0.8rem;
+    }
+
+    .hosts-name {
+        font-size: 32px;
+        line-height: 30px;
+    }
+
+    .hosts-description {
+        font-size: 16px;
+        line-height: 20px;
+        margin-right: 0;
+    }
+
+    /* HERO */
+    .hero-label {
+        font-size: 52px;
+        line-height: 50px;
+        width: 70%;
+    }
+    .hero-container {
+        height: 80vh;
+    }
+
+    .hero-image-container {
+        height: 80vh;
+    }
+
+    /* EVENTS */
+    .event-name {
+        font-size: 1rem;
+        line-height: 25px;
+    }
+
+    .event-date {
+        font-size: 0.75rem;
+        line-height: 20px;
+    }
+
+    .upcoming-label {
+        font-size: 0.85rem;
+    }
+
+    .event-info-container {
+        width: 200px;
+        height: 100px;
+    }
+
+    .event-datetime-container {
+        gap: 0.5rem;
+        margin-top: 6px;
+    }
+
+    /* FOOTER */
+    .footer-logo {
+        height: 16px;
+    }
+
+    .footer-link {
+        font-size: 12px;
+        line-height: 18px;
+        cursor: pointer;
+        margin-right: 0;
+    }
+
+    .footer-container {
+        height: 66px;
+    }
+
+    /* NAVBAR */
+    .nav-btn {
+        font-size: 0.675rem;
+    }
+    .login-btn {
+        font-size: 0.675rem;
+    }
+}
