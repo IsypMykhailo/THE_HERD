@@ -27,7 +27,6 @@ const Blog = () => {
                         setLoading={setLoading}
                     ></Header>
                     <Gallery
-                        // setLoading={setLoading}
                     ></Gallery>
                     <Footer></Footer>
                 </div>
