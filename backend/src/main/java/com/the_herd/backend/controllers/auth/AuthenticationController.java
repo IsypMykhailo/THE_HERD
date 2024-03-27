@@ -39,7 +39,7 @@ public class AuthenticationController {
         return ResponseEntity.ok("User authenticated successfully");
     }
 
-    @GetMapping("/validateSession")
+    @PostMapping("/validateSession")
     public ResponseEntity<?> validateSession(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String jwtToken = extractJwtFromRequest(request);
