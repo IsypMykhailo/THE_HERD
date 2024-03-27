@@ -32,7 +32,7 @@ const Auth = () => {
                 token: token
             }
             try {
-                const response = await fetch("http://localhost:8080/api/v1/auth/validateSession", {
+                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -56,7 +56,7 @@ const Auth = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:8080/api/v1/auth/register';
+        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/register';
 
         const payload = {
             firstName: firstName,
@@ -91,7 +91,7 @@ const Auth = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const apiUrl = 'http://localhost:8080/api/v1/auth/authenticate';
+        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/authenticate';
 
         const payload = {
             email: email,
