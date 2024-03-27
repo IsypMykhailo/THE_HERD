@@ -9,7 +9,7 @@ const Header = ({setLoading}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const logOut = async () => {
         try {
-            const response = await fetch("http://localhost:8080/logout", {
+            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/logout", {
                 method: 'POST',
                 credentials: 'include',
             });
@@ -40,7 +40,7 @@ const Header = ({setLoading}) => {
                 token: token
             }
             try {
-                const response = await fetch("http://localhost:8080/api/v1/auth/validateSession", {
+                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
