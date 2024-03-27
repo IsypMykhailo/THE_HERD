@@ -1,4 +1,4 @@
-package com.the_herd.backend.models;
+package com.the_herd.backend.repositories;
 
 import com.the_herd.backend.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

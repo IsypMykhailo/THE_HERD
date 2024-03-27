@@ -1,4 +1,4 @@
-package com.the_herd.backend.controllers.auth;
+package com.the_herd.backend.controllers;
 
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
@@ -6,12 +6,10 @@ import com.stripe.model.StripeObject;
 import com.stripe.net.Webhook;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1")
 public class WebhookController {
 
     @PostMapping("/webhook")

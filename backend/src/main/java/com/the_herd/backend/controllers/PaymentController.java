@@ -1,10 +1,11 @@
-package com.the_herd.backend.controllers.auth;
+package com.the_herd.backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -15,10 +16,8 @@ import com.stripe.param.PaymentIntentCreateParams;
 import com.the_herd.backend.config.StripeConfig;
 import java.util.Map;
 
-
-
-
 @RestController
+@RequestMapping("/api/v1")
 public class PaymentController {
 
     @Autowired
@@ -31,7 +30,7 @@ public class PaymentController {
             Stripe.apiKey = stripeConfig.getSecretKey();
 
             // Extract request parameters
-            Integer amount = Integer.parseInt(request.get("amount").toString());
+            int amount = Integer.parseInt(request.get("amount").toString());
             String currency = request.get("currency").toString();
 
             // Create PaymentIntent
