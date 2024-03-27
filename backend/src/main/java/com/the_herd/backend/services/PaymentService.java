@@ -1,4 +1,4 @@
-package com.the_herd.backend.controllers.auth;
+package com.the_herd.backend.services;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;

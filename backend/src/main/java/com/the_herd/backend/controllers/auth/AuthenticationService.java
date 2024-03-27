@@ -1,7 +1,7 @@
 package com.the_herd.backend.controllers.auth;
 
 import com.the_herd.backend.config.JwtService;
-import com.the_herd.backend.models.UserRepository;
+import com.the_herd.backend.repositories.UserRepository;
 import com.the_herd.backend.models.user.Role;
 import com.the_herd.backend.models.user.User;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +55,19 @@ public class AuthenticationService {
                 .build();
     }
 
-    public ValidationResponse validateSession(ValidationRequest request) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getEmail());
+    public ValidationResponse validateSession(String email, String token) {
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
         return ValidationResponse.builder()
-                .isValid(jwtService.isTokenValid(request.getToken(), userDetails))
+                .isValid(jwtService.isTokenValid(token, userDetails))
                 .build();
+    }
+
+    public boolean isAdmin(String token) {
+        // Assuming JwtService has a method to extract username (email) from the token
+        String email = jwtService.extractUsername(token);
+        User user = repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        return user.getRole() == Role.ADMIN;
     }
 }
