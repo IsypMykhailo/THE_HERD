@@ -43,13 +43,12 @@ const Auth = () => {
         e.preventDefault();
         const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/register';
 
-        const payload =
-            {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
-            };
+        const payload = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        };
 
         try {
             const response = await fetch(apiUrl, {
@@ -58,16 +57,16 @@ const Auth = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
+                credentials: 'include',
             });
 
             if (response.status === 200) {
-                const data = await response.json();
                 router.push("/");
             } else {
-                console.error('Failed to submit form', await response.text());
+                console.error('Failed to register', await response.text());
             }
         } catch (error) {
-            console.error('Failed to submit form', error);
+            console.error('Failed to register', error);
         }
     };
 
@@ -75,11 +74,10 @@ const Auth = () => {
         e.preventDefault();
         const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/authenticate';
 
-        const payload =
-            {
-                email: email,
-                password: password
-            };
+        const payload = {
+            email: email,
+            password: password
+        };
 
         try {
             const response = await fetch(apiUrl, {
@@ -88,19 +86,18 @@ const Auth = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
+                credentials: 'include',
             });
 
             if (response.status === 200) {
-                const data = await response.json();
                 router.push("/");
-
             } else {
-                console.error('Failed to submit form', await response.text());
+                console.error('Failed to login', await response.text());
             }
         } catch (error) {
-            console.error('Failed to submit form', error);
+            console.error('Failed to login', error);
         }
-    }
+    };
 
     return (
         <div className={"w-full flex flex-row parent-div"}>
