@@ -1,20 +1,17 @@
 package com.the_herd.backend.controllers;
 
-import com.the_herd.backend.controllers.auth.AuthenticationService;
-import com.the_herd.backend.controllers.auth.ValidationRequest;
 import com.the_herd.backend.controllers.requests.TicketRequest;
 import com.the_herd.backend.repositories.EventRepository;
-import com.the_herd.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.the_herd.backend.repositories.TicketRepository;
 import com.the_herd.backend.models.Ticket;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -32,55 +29,45 @@ public class TicketController {
 
     private final TicketRepository ticketRepository;
     private final EventRepository eventRepository;
-    private final UserRepository userRepository;
-    private final AuthenticationService service;
 
     //Creating a ticket: Creating a reservation on a ticket
     @PostMapping("/create")
     public ResponseEntity<?> createTicket(@RequestBody TicketRequest request) {
-        if(service.validateSession(request.getEmail(), request.getToken()).isValid()) {
-            try {
-                Ticket ticket = new Ticket();
-                ticket.setEmail(request.getEmail());
-                ticket.setPrice(request.getPrice());
-                ticket.setFirstName(request.getFirstName());
-                ticket.setLastName(request.getLastName());
-                ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
-                ticketRepository.save(ticket);
-                return ResponseEntity.ok(ticket);
-            } catch (Exception ex) {
-                return ResponseEntity.badRequest().build();
-            }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+        try {
+            Ticket ticket = new Ticket();
+            ticket.setEmail(email);
+            ticket.setPrice(request.getPrice());
+            ticket.setFirstName(request.getFirstName());
+            ticket.setLastName(request.getLastName());
+            ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
+            ticketRepository.save(ticket);
+            return ResponseEntity.ok(ticket);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
         }
-        return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
- 
+
     //reading a ticket: checking information on a reserved ticket
     @GetMapping("/get/{id}")
-    public ResponseEntity<?> getTicketById(@PathVariable UUID id, @RequestBody ValidationRequest request) {
-        if(service.validateSession(request.getEmail(), request.getToken()).isValid()){
-            try {
-                Ticket ticket = ticketRepository.findById(id).get();
-                if(Objects.equals(ticket.getEmail(), request.getEmail()) || service.isAdmin(request.getToken())) {
-                    return ResponseEntity.ok(ticket);
-                }
-                return ResponseEntity.badRequest().build();
-            } catch (Exception ex) {
-                return ResponseEntity.notFound().build();
-            }
-        }
-        return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+    @PreAuthorize("#email == authentication.principal.username or hasAuthority('ADMIN')")
+    public ResponseEntity<?> getTicketById(@PathVariable UUID id) {
+        return ticketRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     //Deleting a ticket: Deleting a reservation on a ticket    
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteTicket(@PathVariable UUID id, @RequestBody ValidationRequest request) {
-        if (ticketRepository.existsById(id) && service.validateSession(request.getEmail(), request.getToken()).isValid() && service.isAdmin(request.getToken())) {
-            ticketRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> deleteTicket(@PathVariable UUID id) {
+        return ticketRepository.findById(id)
+                .map(ticket -> {
+                    ticketRepository.deleteById(id);
+                    return ResponseEntity.ok().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
-        
+
 }
