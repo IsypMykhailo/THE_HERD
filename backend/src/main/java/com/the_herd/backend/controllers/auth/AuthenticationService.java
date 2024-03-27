@@ -26,8 +26,6 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserDetailsService userDetailsService;
-
     public void register(RegisterRequest request, HttpServletResponse response) {
         User user = User.builder()
                 .firstName(request.getFirstName())
@@ -57,10 +55,10 @@ public class AuthenticationService {
     private void setJwtCookie(HttpServletResponse response, String token) {
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(true) // Should be true in production to send the cookie only over HTTPS
+                .secure(true)
                 .path("/")
                 .maxAge(7 * 24 * 60 * 60) // For example, valid for one week
-                .sameSite("Lax") // This can be "Strict" or "Lax" depending on your requirements
+                .sameSite("Lax")
                 .build();
         response.addHeader("Set-Cookie", jwtCookie.toString());
     }
