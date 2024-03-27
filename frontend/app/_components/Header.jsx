@@ -8,8 +8,8 @@ const Header = ({setLoading}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const logOut = async () => {
         try {
-            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/logout", {
-                method: 'GET',
+            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/logout", {
+                method: 'POST',
                 credentials: 'include',
             });
 
@@ -17,9 +17,9 @@ const Header = ({setLoading}) => {
                 setIsLoggedIn(false);
             }
         } catch (error) {
-
+            console.error("Failed to log out", error)
+            setIsLoggedIn(true)
         }
-        window.location.reload();
     }
 
     React.useEffect(() => {
