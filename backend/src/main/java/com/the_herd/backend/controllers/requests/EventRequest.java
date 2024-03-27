@@ -17,6 +17,4 @@ public class EventRequest {
 
     @Nullable
     private byte[] eventPoster;
-    private String email;
-    private String token;
 }

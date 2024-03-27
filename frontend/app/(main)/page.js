@@ -10,33 +10,19 @@ import Hero from "../_components/home/Hero";
 import Hosts from "../_components/home/Hosts";
 
 const Home = () => {
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-  return (
-      // loading ?
-      //     (
-      //         <div className={"container-fluid d-flex flex-row justify-content-center align-items-center parent-div"}>
-      //           <MutatingDots
-      //               color="#8b3c7e"
-      //               secondaryColor={"#8b3c7e"}
-      //               height={100}
-      //               width={100}
-      //           />
-      //         </div>
-      //     )
-      //     :
-      //     (
-              <div>
-                <Header
-                    setLoading={setLoading}
-                ></Header>
-                <Hero></Hero>
-                <Events></Events>
-                <Hosts></Hosts>
-                <Footer></Footer>
-              </div>
-          // )
-  );
+    return (
+        <div>
+            <Header
+                setLoading={setLoading}
+            ></Header>
+            <Hero></Hero>
+            <Events></Events>
+            <Hosts></Hosts>
+            <Footer></Footer>
+        </div>
+    );
 }
 
 export default Home;

@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-
-import com.the_herd.backend.controllers.auth.AuthenticationService;
-import com.the_herd.backend.controllers.auth.ValidationRequest;
 import com.the_herd.backend.controllers.requests.EventRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,24 +26,21 @@ import com.the_herd.backend.models.Event;
 @RequiredArgsConstructor
 public class EventController {
     private final EventRepository eventRepository;
-    private final AuthenticationService service;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createEvent(@RequestBody EventRequest request) {
-        if (service.validateSession(request.getEmail(), request.getToken()).isValid() && service.isAdmin(request.getToken())) {
-            try {
-                Event event = new Event();
-                event.setName(request.getName());
-                event.setLocation(request.getLocation());
-                event.setStartTime(LocalDateTime.parse(request.getStartTime()));
-                event.setEventPoster(request.getEventPoster());
-                eventRepository.save(event);
-                return ResponseEntity.status(HttpStatus.CREATED).body(event);
-            } catch (Exception ex) {
-                return ResponseEntity.badRequest().build();
-            }
+        try {
+            Event event = new Event();
+            event.setName(request.getName());
+            event.setLocation(request.getLocation());
+            event.setStartTime(LocalDateTime.parse(request.getStartTime()));
+            event.setEventPoster(request.getEventPoster());
+            eventRepository.save(event);
+            return ResponseEntity.status(HttpStatus.CREATED).body(event);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
         }
-        return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/get/all")
@@ -61,10 +56,8 @@ public class EventController {
 
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateEvent(@PathVariable UUID id, @RequestBody EventRequest request) {
-        if(!service.validateSession(request.getEmail(), request.getToken()).isValid() || !service.isAdmin(request.getToken())){
-            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
-        }
         try {
             Event event = eventRepository.findById(id).get();
 
@@ -82,10 +75,9 @@ public class EventController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable UUID id, @RequestBody ValidationRequest request) {
-        if(!service.validateSession(request.getEmail(), request.getToken()).isValid() || !service.isAdmin(request.getToken())) {
-            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
-        } else if (!eventRepository.existsById(id)) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteEvent(@PathVariable UUID id) {
+        if (!eventRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
         eventRepository.deleteById(id);
