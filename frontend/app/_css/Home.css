@@ -1,10 +1,10 @@
 body {
     font-family: 'Inter', sans-serif;
 }
-/*html {*/
-/*    scrollbar-width: thin;*/
-/*    scrollbar-color: #242628 #121416;*/
-/*}*/
+html {
+    scrollbar-width: none;
+    scrollbar-color: #242628 #121416;
+}
 
 /*NAVBAR*/
 .navbar-container {
