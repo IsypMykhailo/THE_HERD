@@ -4,7 +4,9 @@ import com.the_herd.backend.config.JwtService;
 import com.the_herd.backend.repositories.UserRepository;
 import com.the_herd.backend.models.user.Role;
 import com.the_herd.backend.models.user.User;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,8 +28,8 @@ public class AuthenticationService {
 
     private final UserDetailsService userDetailsService;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+    public void register(RegisterRequest request, HttpServletResponse response) {
+        User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -35,13 +37,11 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+        String jwtToken = jwtService.generateToken(user);
+        setJwtCookie(response, jwtToken);
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public void authenticate(AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -50,24 +50,18 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+
+        setJwtCookie(response, jwtToken);
     }
 
-    public ValidationResponse validateSession(String email, String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-        return ValidationResponse.builder()
-                .isValid(jwtService.isTokenValid(token, userDetails))
+    private void setJwtCookie(HttpServletResponse response, String token) {
+        ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(true) // Should be true in production to send the cookie only over HTTPS
+                .path("/")
+                .maxAge(7 * 24 * 60 * 60) // For example, valid for one week
+                .sameSite("Lax") // This can be "Strict" or "Lax" depending on your requirements
                 .build();
-    }
-
-    public boolean isAdmin(String token) {
-        // Assuming JwtService has a method to extract username (email) from the token
-        String email = jwtService.extractUsername(token);
-        User user = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-
-        return user.getRole() == Role.ADMIN;
+        response.addHeader("Set-Cookie", jwtCookie.toString());
     }
 }
