@@ -2,15 +2,23 @@
 
 import '../_css/Home.css';
 import React, {useState} from "react";
-import Cookies from "js-cookie";
 import Link from "next/link";
 
 const Header = ({setLoading}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const logOut = () => {
-        Cookies.set('token', '');
-        Cookies.set('email', '');
-        Cookies.set('password', '');
+    const logOut = async () => {
+        try {
+            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/logout", {
+                method: 'GET',
+                credentials: 'include',
+            });
+
+            if (response.status === 200) {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+
+        }
         window.location.reload();
     }
 
@@ -18,48 +26,24 @@ const Header = ({setLoading}) => {
 
         const validateSession = async () => {
             setLoading(true);
-            const token = Cookies.get('token')
-            const email = Cookies.get('email')
-            const password = Cookies.get('password')
-            if (token === '' || email === '' || password === '' || token === undefined || email === undefined || password === undefined) {
-                setLoading(false);
-                return;
-            }
-            const payload = {
-                email: email,
-                password: password,
-                token: token
-            }
             try {
                 const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
+                    method: 'GET',
+                    credentials: 'include',
                 });
 
-                const data = await response.json();
-
-                if (response.status === 200 && data.valid === true) {
+                if (response.status === 200) {
                     setIsLoggedIn(true);
-                    setLoading(false);
-                } else if (response.status === 200 && data.valid === false) {
+                } else {
                     setIsLoggedIn(false);
-                    setLoading(false);
-                } else if(response.status === 403) {
-                    Cookies.set('token', '');
-                    Cookies.set('email', '');
-                    Cookies.set('password', '');
-                    setLoading(false);
-                }
-                else {
-                    console.error('Failed to submit form', await response.text());
                 }
             } catch (error) {
-                console.error('Failed to submit form', error);
+                console.error('Failed to validate session', error);
+                setIsLoggedIn(false);
+            } finally {
+                setLoading(false);
             }
-        }
+        };
 
         validateSession();
     }, [setLoading]);
