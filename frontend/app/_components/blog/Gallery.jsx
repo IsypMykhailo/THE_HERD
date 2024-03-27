@@ -54,7 +54,7 @@ const Gallery = () => {
             <div className={"gallery-container top-0 left-0 overflow-x-auto"}>
                 {gallery.map((el, index) => (
                     el.type === 'image' ? (
-                        <Image src={el.src} alt={`Image ${el.id}`} width={0} height={0} className={"gallery-entity"}
+                        <Image key={index} src={el.src} alt={`Image ${el.id}`} width={0} height={0} className={"gallery-entity"}
                                unoptimized/>
                     ) : (
                         <video key={index} controls style={{width: '100%'}}>
