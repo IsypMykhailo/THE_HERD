@@ -1,6 +1,7 @@
 package com.the_herd.backend.controllers.auth;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -10,18 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"https://the-herd.netlify.app", "http://localhost:3000", "https://the-herd.vercel.app"})
 public class AuthenticationController {
     private final AuthenticationService service;
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
@@ -41,28 +39,44 @@ public class AuthenticationController {
         return ResponseEntity.ok("User authenticated successfully");
     }
 
-    @PostMapping("/validateSession")
-    public ResponseEntity<?> validateSession() {
+    @GetMapping("/validateSession")
+    public ResponseEntity<?> validateSession(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String jwtToken = extractJwtFromRequest(request);
 
-        if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null && authentication.isAuthenticated() && jwtToken != null) {
             return ResponseEntity.ok("Session is valid");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session is invalid");
         }
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        ResponseCookie jwtCookie = ResponseCookie.from("jwt", "")
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(0)
-                .build();
+    private String extractJwtFromRequest(HttpServletRequest request) {
+        if (request.getCookies() == null) return null;
 
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
-
-        return ResponseEntity.ok().body("Logged out successfully");
+        for (Cookie cookie : request.getCookies()) {
+            if ("jwt".equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
     }
+
+    /*@PostMapping("/logout")
+    public ResponseEntity<?> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            ResponseCookie jwtCookie = ResponseCookie.from("jwt", "")
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .maxAge(0)
+                    .build();
+
+            response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
+            this.logoutHandler.logout(request, response, authentication);
+            return ResponseEntity.ok().body("Logged out successfully");
+        } catch (Exception ex){
+            return ResponseEntity.ok().body(ex.getMessage());
+        }
+    }*/
 }
