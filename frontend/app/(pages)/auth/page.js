@@ -7,6 +7,7 @@ import '../../_css/Auth.css';
 import SignUp from "../../_components/auth/SignUp";
 import Login from "../../_components/auth/Login";
 import Image from "next/image";
+import Cookies from 'js-cookie';
 
 const Auth = () => {
     const router = useRouter()
@@ -20,10 +21,24 @@ const Auth = () => {
     React.useEffect(() => {
         const validateSession = async () => {
             setLoading(true);
+            const token = Cookies.get('token')
+            const email = Cookies.get('email')
+            if (token === '' || email === '' || token === undefined || email === undefined) {
+                setLoading(false);
+                return;
+            }
+            const payload = {
+                email: email,
+                token: token
+            }
             try {
-                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
+                const response = await fetch("http://localhost:8080/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
                 });
 
                 if (response.status === 200) {
@@ -41,7 +56,7 @@ const Auth = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/register';
+        const apiUrl = 'http://localhost:8080/api/v1/auth/register';
 
         const payload = {
             firstName: firstName,
@@ -61,6 +76,10 @@ const Auth = () => {
             });
 
             if (response.status === 200) {
+                const data = await response.json();
+                const token = data.token;
+                Cookies.set('token', token, {expires: 7, secure: true})
+                Cookies.set('email', email, {expires: 7, secure: true})
                 router.push("/");
             } else {
                 console.error('Failed to register', await response.text());
@@ -72,7 +91,7 @@ const Auth = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/authenticate';
+        const apiUrl = 'http://localhost:8080/api/v1/auth/authenticate';
 
         const payload = {
             email: email,
@@ -90,6 +109,10 @@ const Auth = () => {
             });
 
             if (response.status === 200) {
+                const data = await response.json();
+                const token = data.token;
+                Cookies.set('token', token, {expires: 7, secure: true})
+                Cookies.set('email', email, {expires: 7, secure: true})
                 router.push("/");
             } else {
                 console.error('Failed to login', await response.text());

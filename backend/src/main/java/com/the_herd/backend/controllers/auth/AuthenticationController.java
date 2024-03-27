@@ -1,5 +1,6 @@
 package com.the_herd.backend.controllers.auth;
 
+import com.the_herd.backend.controllers.requests.ValidationRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,8 +27,8 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request,
             HttpServletResponse response
     ) {
-        service.register(request, response);
-        return ResponseEntity.ok("User registered successfully");
+        String insecureJwt = service.register(request, response);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(insecureJwt).build());
     }
 
     @PostMapping("/authenticate")
@@ -35,48 +36,18 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ) {
-        service.authenticate(request, response);
-        return ResponseEntity.ok("User authenticated successfully");
+        String insecureJwt = service.authenticate(request, response);
+        return ResponseEntity.ok(AuthenticationResponse.builder().token(insecureJwt).build());
     }
 
     @PostMapping("/validateSession")
-    public ResponseEntity<?> validateSession(HttpServletRequest request) {
+    public ResponseEntity<?> validateSession(@RequestBody ValidationRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String jwtToken = extractJwtFromRequest(request);
 
-        if (authentication != null && authentication.isAuthenticated() && jwtToken != null) {
+        if (authentication != null && authentication.isAuthenticated() && service.isSessionValid(request.getEmail(), request.getToken())) {
             return ResponseEntity.ok("Session is valid");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session is invalid");
         }
     }
-
-    private String extractJwtFromRequest(HttpServletRequest request) {
-        if (request.getCookies() == null) return null;
-
-        for (Cookie cookie : request.getCookies()) {
-            if ("jwt".equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
-
-    /*@PostMapping("/logout")
-    public ResponseEntity<?> logout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            ResponseCookie jwtCookie = ResponseCookie.from("jwt", "")
-                    .httpOnly(true)
-                    .secure(true)
-                    .path("/")
-                    .maxAge(0)
-                    .build();
-
-            response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
-            this.logoutHandler.logout(request, response, authentication);
-            return ResponseEntity.ok().body("Logged out successfully");
-        } catch (Exception ex){
-            return ResponseEntity.ok().body(ex.getMessage());
-        }
-    }*/
 }
