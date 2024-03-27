@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.CachingUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +26,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
-    public void register(RegisterRequest request, HttpServletResponse response) {
+    public String register(RegisterRequest request, HttpServletResponse response) {
         User user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -36,10 +38,12 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
         String jwtToken = jwtService.generateToken(user);
+        var insecureJwtToken = jwtService.generateToken(user);
         setJwtCookie(response, jwtToken);
+        return insecureJwtToken;
     }
 
-    public void authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public String authenticate(AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -48,8 +52,10 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        var insecureJwtToken = jwtService.generateToken(user);
 
         setJwtCookie(response, jwtToken);
+        return insecureJwtToken;
     }
 
     private void setJwtCookie(HttpServletResponse response, String token) {
@@ -61,5 +67,10 @@ public class AuthenticationService {
                 .sameSite("Lax")
                 .build();
         response.addHeader("Set-Cookie", jwtCookie.toString());
+    }
+
+    public boolean isSessionValid(String email, String token) {
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+        return jwtService.isTokenValid(token, userDetails);
     }
 }
