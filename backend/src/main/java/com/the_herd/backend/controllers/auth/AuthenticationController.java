@@ -36,6 +36,6 @@ public class AuthenticationController {
     public ResponseEntity<ValidationResponse> validateSession(
             @RequestBody ValidationRequest request
     ) {
-        return ResponseEntity.ok(service.validateSession(request));
+        return ResponseEntity.ok(service.validateSession(request.getEmail(), request.getToken()));
     }
 }
