@@ -28,7 +28,7 @@ const Header = ({setLoading}) => {
             setLoading(true);
             try {
                 const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
-                    method: 'GET',
+                    method: 'POST',
                     credentials: 'include',
                 });
 
