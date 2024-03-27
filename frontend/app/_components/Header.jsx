@@ -3,18 +3,21 @@
 import '../_css/Home.css';
 import React, {useState} from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 const Header = ({setLoading}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const logOut = async () => {
         try {
-            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/logout", {
+            const response = await fetch("http://localhost:8080/logout", {
                 method: 'POST',
                 credentials: 'include',
             });
 
             if (response.status === 200) {
                 setIsLoggedIn(false);
+                Cookies.set('token', '');
+                Cookies.set('email', '');
             }
         } catch (error) {
             console.error("Failed to log out", error)
@@ -26,20 +29,31 @@ const Header = ({setLoading}) => {
 
         const validateSession = async () => {
             setLoading(true);
+            const token = Cookies.get('token')
+            const email = Cookies.get('email')
+            if (token === '' || email === '' || token === undefined || email === undefined) {
+                setLoading(false);
+                return;
+            }
+            const payload = {
+                email: email,
+                token: token
+            }
             try {
-                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
+                const response = await fetch("http://localhost:8080/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
                 });
 
                 if (response.status === 200) {
-                    setIsLoggedIn(true);
-                } else {
-                    setIsLoggedIn(false);
+                    setIsLoggedIn(true)
                 }
             } catch (error) {
                 console.error('Failed to validate session', error);
-                setIsLoggedIn(false);
             } finally {
                 setLoading(false);
             }
