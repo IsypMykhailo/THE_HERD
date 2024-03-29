@@ -62,6 +62,34 @@
     height: 30%;
 }
 
+.loading {
+    letter-spacing: 4px;
+    color: #fdfeff;
+    font-weight: 700;
+    font-size: 48px;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.event-btn {
+    background-color: #8b3c7e;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #fdfeff;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    width: 50%;
+}
+
+.event-about {
+    width: 80%;
+}
+
 @media(max-width: 1300px) {
     .events-container {
         height: calc(100% - 66px);
