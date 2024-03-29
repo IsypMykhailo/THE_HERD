@@ -11,8 +11,10 @@ const Gallery = () => {
     const [gallery, setGallery] = useState([]);
     const containerRef = useRef(null)
     const galleryRef = useRef(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         fetch('/gallery.json')
             .then((response) => response.json())
             .then((data) => {
@@ -21,6 +23,11 @@ const Gallery = () => {
             })
             .catch((error) => console.error("Fetching blogs failed:", error));
     }, []);
+
+    useEffect(() => {
+        if(!gallery) return
+        setLoading(false);
+    }, [gallery])
 
     useEffect(() => {
         if (!galleryRef.current || !containerRef.current) return
@@ -39,7 +46,9 @@ const Gallery = () => {
         }
     }, [galleryRef, containerRef]);
 
-    return (
+    return loading || !gallery ? (
+        <div className={'loading'}>THE HERD</div>
+    ) : (
         <div className='xl:h-[200vh] relative' ref={containerRef}>
             <div ref={galleryRef} className={"gallery-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen"}>
                 {gallery.map((el, index) => (

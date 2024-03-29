@@ -8,9 +8,9 @@ import Footer from "../_components/Footer";
 import Header from "../_components/Header";
 import Hero from "../_components/home/Hero";
 import Hosts from "../_components/home/Hosts";
+import Loading from "@/app/_components/Loading";
 
 const Home = () => {
-    const [loading, setLoading] = useState(false);
 
     return (
         <div>
