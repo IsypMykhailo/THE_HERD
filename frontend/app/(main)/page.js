@@ -14,9 +14,7 @@ const Home = () => {
 
     return (
         <div>
-            <Header
-                setLoading={setLoading}
-            ></Header>
+            <Header></Header>
             <Hero></Hero>
             <Events></Events>
             <Hosts></Hosts>

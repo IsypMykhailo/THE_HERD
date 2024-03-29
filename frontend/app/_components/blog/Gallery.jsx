@@ -1,12 +1,12 @@
 'use client'
 
 import "../../_css/Blog.css"
-import {useState, useEffect, useRef, Children, useLayoutEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import {useLenis} from "@studio-freight/react-lenis";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import gsap from "gsap"
 
-// TODO: Fix the Gallery to allow correct horizontal scrolling
 const Gallery = () => {
     const [gallery, setGallery] = useState([]);
     const containerRef = useRef(null)
@@ -31,6 +31,7 @@ const Gallery = () => {
             end: `+=${containerRef.current.clientHeight}`,
             onUpdate: self => {
                 galleryRef.current.scrollLeft = galleryRef.current.clientWidth * self.progress
+                console.log(self.progress)
             }
         })
         return () => {
@@ -40,7 +41,7 @@ const Gallery = () => {
 
     return (
         <div className='xl:h-[200vh] relative' ref={containerRef}>
-            <div ref={galleryRef} id={'carousel'} className={"gallery-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen"}>
+            <div ref={galleryRef} className={"gallery-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen"}>
                 {gallery.map((el, index) => (
                     el.type === 'image' ? (
                         <Image key={index} src={el.src} alt={`Image ${el.id}`} width={0} height={0}

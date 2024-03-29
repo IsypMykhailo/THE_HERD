@@ -4,8 +4,6 @@
 /* GALLERY */
 .gallery-container {
     background-color: #121416;
-    /*min-height: calc(100vh - 84px);*/
-    /*height: calc(100vh - 84px);*/
     min-height: 100vh;
     height: 100vh;
     min-width: 100vw;

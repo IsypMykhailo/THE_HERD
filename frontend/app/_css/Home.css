@@ -189,6 +189,7 @@ html {
     display: flex;
     flex-direction: row;
     gap: 23px;
+    scrollbar-width: thin;
 }
 
 /* HERO */
