@@ -79,7 +79,7 @@
 .event-btn {
     background-color: #8b3c7e;
     /*border-radius: 8px;*/
-    font-size: 20px;
+    font-size: 1.25rem;
     color: #fdfeff;
     font-weight: 600;
     letter-spacing: -0.2px;
@@ -88,6 +88,23 @@
 
 .event-about {
     width: 80%;
+}
+
+.event-description {
+    color: #fdfeff;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.event-description-label {
+    color: #fdfeff;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.event-info-poster {
+    width: 30%;
+    height: auto;
 }
 
 @media(max-width: 1300px) {
@@ -121,5 +138,28 @@
         color: #fdfeff;
         font-weight: 400;
         letter-spacing: -0.2px;
+    }
+
+    .event-description {
+        font-size: 0.75rem;
+    }
+
+    .event-description-label {
+        font-size: 0.85rem;
+    }
+
+    .event-btn {
+        background-color: #8b3c7e;
+        /*border-radius: 8px;*/
+        font-size: 0.75rem;
+        color: #fdfeff;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        width: 100%;
+    }
+
+    .event-info-poster {
+        width: 80%;
+        height: auto;
     }
 }
