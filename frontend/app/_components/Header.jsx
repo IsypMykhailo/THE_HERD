@@ -1,7 +1,7 @@
 'use client'
 
 import '../_css/Home.css';
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Loading from "@/app/_components/Loading";
@@ -29,12 +29,13 @@ const Header = () => {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         setHeaderLoading(true)
         const validateSession = async () => {
             const token = Cookies.get('token')
             const email = Cookies.get('email')
             if (token === '' || email === '' || token === undefined || email === undefined) {
+                setIsLoggedIn(false)
                 return;
             }
             const payload = {
@@ -59,9 +60,6 @@ const Header = () => {
             } catch (error) {
                 console.error('Failed to validate session', error);
             }
-            // } finally {
-            //     setHeaderLoading(false)
-            // }
         };
 
         validateSession();
