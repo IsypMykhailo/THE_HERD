@@ -6,6 +6,30 @@ html {
     scrollbar-color: #242628 #121416;
 }
 
+.loading {
+    letter-spacing: 4px;
+    color: #fdfeff;
+    font-weight: 700;
+    font-size: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #121416;
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
+}
+
 /*NAVBAR*/
 .navbar-container {
     mix-blend-mode: difference;

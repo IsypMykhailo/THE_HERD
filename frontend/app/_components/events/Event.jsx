@@ -4,6 +4,7 @@ import {useState, useEffect, useRef} from "react";
 import '../../_css/Events.css'
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Image from "next/image";
+import Link from "next/link";
 
 const Event = ({events}) => {
     const containerRef = useRef(null)
@@ -26,7 +27,7 @@ const Event = ({events}) => {
         <div ref={containerRef} className='xl:h-[200vh] relative'>
             <div ref={eventRef} className={'events-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen'}>
                 {events.map((el, index) => (
-                    <div key={index} className={'event-entity m-10 xl:my-20 hover:xl:my-14'}>
+                    <Link key={index} href={`/events/${el.id}`} className={'event-entity m-10 xl:my-20 hover:xl:my-14'}>
                         <Image
                             src={el.eventPoster}
                             alt={`Image ${el.id}`}
@@ -49,7 +50,7 @@ const Event = ({events}) => {
                                 {el.location}
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
