@@ -23,11 +23,8 @@ const Blog = () => {
         //     :
         //     (
                 <div className={"blog-container"}>
-                    <Header
-                        setLoading={setLoading}
-                    ></Header>
-                    <Gallery
-                    ></Gallery>
+                    <Header></Header>
+                    <Gallery></Gallery>
                     <Footer></Footer>
                 </div>
             // )
