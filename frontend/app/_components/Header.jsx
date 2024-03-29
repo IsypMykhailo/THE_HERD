@@ -1,12 +1,16 @@
 'use client'
 
 import '../_css/Home.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import Loading from "@/app/_components/Loading";
 
 const Header = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [headerLoading, setHeaderLoading] = useState(true)
+    const [loadingClass, setLoadingClass] = useState('')
+
     const logOut = async () => {
         try {
             const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/logout", {
@@ -26,13 +30,11 @@ const Header = () => {
     }
 
     React.useEffect(() => {
-
+        setHeaderLoading(true)
         const validateSession = async () => {
-            // setLoading(true);
             const token = Cookies.get('token')
             const email = Cookies.get('email')
             if (token === '' || email === '' || token === undefined || email === undefined) {
-                // setLoading(false);
                 return;
             }
             const payload = {
@@ -51,16 +53,34 @@ const Header = () => {
 
                 if (response.status === 200) {
                     setIsLoggedIn(true)
+                } else {
+                    setIsLoggedIn(false)
                 }
             } catch (error) {
                 console.error('Failed to validate session', error);
-            } finally {
-                // setLoading(false);
             }
+            // } finally {
+            //     setHeaderLoading(false)
+            // }
         };
 
         validateSession();
     }, []);
+
+    useEffect(() => {
+        const loadHeader = async () => {
+            if (isLoggedIn === null) return
+            setLoadingClass('hidden')
+            const timer = setTimeout(() => setHeaderLoading(false), 500);
+            return () => clearTimeout(timer);
+        }
+        loadHeader()
+    }, [isLoggedIn]);
+
+    if (headerLoading) {
+        return <Loading loadingClass={loadingClass}/>
+    }
+
     return (
         <div
             className="flex flex-row items-start justify-between fixed overflow-hidden navbar-container">
