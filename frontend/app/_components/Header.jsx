@@ -5,7 +5,7 @@ import React, {useState} from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 
-const Header = ({setLoading}) => {
+const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const logOut = async () => {
         try {
@@ -28,11 +28,11 @@ const Header = ({setLoading}) => {
     React.useEffect(() => {
 
         const validateSession = async () => {
-            setLoading(true);
+            // setLoading(true);
             const token = Cookies.get('token')
             const email = Cookies.get('email')
             if (token === '' || email === '' || token === undefined || email === undefined) {
-                setLoading(false);
+                // setLoading(false);
                 return;
             }
             const payload = {
@@ -55,12 +55,12 @@ const Header = ({setLoading}) => {
             } catch (error) {
                 console.error('Failed to validate session', error);
             } finally {
-                setLoading(false);
+                // setLoading(false);
             }
         };
 
         validateSession();
-    }, [setLoading]);
+    }, []);
     return (
         <div
             className="flex flex-row items-start justify-between fixed overflow-hidden navbar-container">
@@ -85,8 +85,8 @@ const Header = ({setLoading}) => {
                 <Link href='/blog' className="text-white text-start nav-btn">
                     Blog
                 </Link>
-                <Link href='/' className="text-white text-start nav-btn">
-                    Tickets
+                <Link href='/events' className="text-white text-start nav-btn">
+                    Events
                 </Link>
             </div>
             <div>
