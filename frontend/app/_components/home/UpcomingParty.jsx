@@ -1,6 +1,8 @@
-const UpcomingParty = ({name, date, time}) => {
+import Link from 'next/link'
+
+const UpcomingParty = ({name, date, time, id}) => {
     return (
-        <button className={"flex flex-row event-container group"}>
+        <Link href={`/events/${id}`} className={"flex flex-row event-container group"}>
             <div className="bg-white flex flex-col event-info-container">
                 <div className={"event-name"}>
                     {name}
@@ -30,7 +32,7 @@ const UpcomingParty = ({name, date, time}) => {
                     />
                 </svg>
             </div>
-        </button>
+        </Link>
     );
 }
 
