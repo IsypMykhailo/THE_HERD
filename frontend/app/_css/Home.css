@@ -17,7 +17,9 @@ html {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-color: #121416;
     z-index: 999;
     opacity: 1;
@@ -36,7 +38,7 @@ html {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 25px;
-    z-index: 999;
+    z-index: 900;
     width: 100%;
     pointer-events: none;
 }
