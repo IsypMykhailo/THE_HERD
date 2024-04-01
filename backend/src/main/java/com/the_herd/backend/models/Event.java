@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 
 @Entity
@@ -20,7 +22,8 @@ public class Event {
 
     @Getter
     @Setter
-    private String name;
+    @Nullable
+    private byte[] eventPoster;
 
     @Getter
     @Setter
@@ -32,6 +35,14 @@ public class Event {
 
     @Getter
     @Setter
-    @Nullable
-    private byte[] eventPoster;
+    private String name;
+
+    @Getter
+    @Setter
+    private LocalDate date;
+
+    @ElementCollection
+    @CollectionTable(name = "event_description", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "description")
+    private List<String> description;
 }
