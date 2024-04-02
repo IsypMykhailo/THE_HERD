@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     Optional<Ticket> findByFirstNameAndLastName(String firstName, String lastName);
-    List<Ticket> findByEvent_Id(UUID eventId);
+    List<Ticket> findByEvent_EventId(UUID eventId);
 }

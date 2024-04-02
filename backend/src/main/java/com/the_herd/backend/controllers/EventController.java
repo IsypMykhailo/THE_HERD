@@ -67,7 +67,7 @@ public class EventController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Ticket> eventTickets = ticketRepository.findByEvent_Id(id);
+        List<Ticket> eventTickets = ticketRepository.findByEvent_EventId(id);
 
         List<GuestInfo> guestsInfo = eventTickets.stream()
                 .map(ticket -> new GuestInfo(ticket.getFirstName(), ticket.getLastName(), ticket.getEmail()))
