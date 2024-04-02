@@ -1,11 +1,10 @@
 package com.the_herd.backend.controllers;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.List;
-
+import java.util.NoSuchElementException;
 
 import com.the_herd.backend.controllers.requests.EventRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,8 @@ import com.the_herd.backend.repositories.EventRepository;
 import com.the_herd.backend.repositories.TicketRepository;
 import com.the_herd.backend.models.Event;
 import com.the_herd.backend.models.Ticket;
+import com.the_herd.backend.controllers.responses.GuestResponse;
+
 
 @RestController
 @RequestMapping("/api/v1/events")
@@ -56,37 +57,31 @@ public class EventController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable UUID id) {
-        Optional<Event> event = eventRepository.findById(id);
-        return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Event event = eventRepository.findById(id).get();
+        if (event == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(event);
     }
 
     @GetMapping("/get/{id}/guests")
-    public ResponseEntity<?> getEventGuests(@PathVariable UUID id) {
-        System.out.println("Getting Guests");
-        Optional<Event> eventOptional = eventRepository.findById(id);
-        if (eventOptional.isEmpty()) {
+    public ResponseEntity<List<GuestResponse>> getEventGuests(@PathVariable UUID id) {
+        Event event;
+        try {
+            event = eventRepository.findById(id).get();
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
 
         List<Ticket> eventTickets = ticketRepository.findByEvent_EventId(id);
 
-        List<GuestInfo> guestsInfo = eventTickets.stream()
-                .map(ticket -> new GuestInfo(ticket.getFirstName(), ticket.getLastName(), ticket.getEmail()))
+        List<GuestResponse> guestsInfo = eventTickets.stream()
+                .map(ticket -> new GuestResponse(ticket.getFirstName(), ticket.getLastName(), ticket.getEmail()))
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(guestsInfo); //creates json
+        return ResponseEntity.ok(guestsInfo);
     }
-    static class GuestInfo {
-        private String firstName;
-        private String lastName;
-        private String email;
 
-        public GuestInfo(String firstName, String lastName, String email) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-        }
-    }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
