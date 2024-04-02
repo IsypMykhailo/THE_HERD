@@ -18,6 +18,7 @@ const Events = () => {
             })
             .then((data) => {
                 setEvents(data);
+                console.log(data)
             })
             .catch((error) => {
                 console.error("Fetching blogs failed: ", error);
