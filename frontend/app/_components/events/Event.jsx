@@ -5,6 +5,7 @@ import '../../_css/Events.css'
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
+import {formatDate, formatTime} from "@/app/_utils/parseUtils";
 
 const Event = ({events}) => {
     const containerRef = useRef(null)
@@ -27,10 +28,10 @@ const Event = ({events}) => {
         <div ref={containerRef} className='xl:h-[200vh] relative'>
             <div ref={eventRef} className={'events-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen'}>
                 {events.map((el, index) => (
-                    <Link key={index} href={`/events/${el.id}`} className={'event-entity m-10 xl:my-20 hover:xl:my-14'}>
+                    <Link key={index} href={`/events/${el.eventId}`} className={'event-entity m-10 xl:my-20 hover:xl:my-14'}>
                         <Image
                             src={el.eventPoster}
-                            alt={`Image ${el.id}`}
+                            alt={`Image ${el.eventId}`}
                             width={0} height={0} unoptimized
                             className={'event-poster'}
                         />
@@ -40,10 +41,10 @@ const Event = ({events}) => {
                             </div>
                             <div className={'flex flex-row items-center mt-1'}>
                                 <div className={'event-page-date'}>
-                                    {el.date}
+                                    {formatDate(el.date)}
                                 </div>
                                 <div className={'event-time ml-2'}>
-                                    {el.startTime}
+                                    {formatTime(el.startTime)}
                                 </div>
                             </div>
                             <div className={'mt-1 event-location'}>
