@@ -3,14 +3,14 @@
 import '../../_css/Home.css';
 import UpcomingParty from "./UpcomingParty";
 import {useEffect, useState} from "react";
-import Loading from "@/app/_components/Loading";
+import {formatDate, formatTime} from "@/app/_utils/parseUtils";
 
 const Events = () => {
     const [events, setEvents] = useState(null);
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         setLoading(true)
-        fetch('/events.json')
+        fetch('https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/events/get/all')
             .then((response) => response.json())
             .then((data) => {
                 setEvents(data)
@@ -22,6 +22,7 @@ const Events = () => {
         if(!events) return
         setLoading(false)
     }, [events])
+
     return (
         <>
             {(loading || !events) ? (
@@ -36,9 +37,9 @@ const Events = () => {
                             <UpcomingParty
                                 key={index}
                                 name={event.name}
-                                date={event.date}
-                                time={event.startTime}
-                                id={event.id}
+                                date={formatDate(event.date)}
+                                time={formatTime(event.startTime)}
+                                id={event.eventId}
                             />
                         ))}
                     </div>

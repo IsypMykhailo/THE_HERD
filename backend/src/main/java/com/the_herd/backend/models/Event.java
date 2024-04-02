@@ -18,12 +18,12 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private UUID eventId;
 
     @Getter
     @Setter
-    @Nullable
-    private byte[] eventPoster;
+    private String eventPoster;
 
     @Getter
     @Setter
@@ -41,8 +41,7 @@ public class Event {
     @Setter
     private LocalDate date;
 
-    @ElementCollection
-    @CollectionTable(name = "event_description", joinColumns = @JoinColumn(name = "event_id"))
-    @Column(name = "description")
-    private List<String> description;
+    @Getter
+    @Setter
+    private String descriptionArray;
 }

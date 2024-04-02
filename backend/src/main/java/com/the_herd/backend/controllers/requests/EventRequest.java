@@ -14,7 +14,5 @@ public class EventRequest {
     private String name;
     private String location;
     private String startTime;
-
-    @Nullable
-    private byte[] eventPoster;
+    private String eventPoster;
 }
