@@ -4,12 +4,20 @@ import {useEffect, useState} from "react";
 import '../../../_css/Events.css'
 import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
+import GuestListModal from "@/app/_components/GuestListModal";
 import Image from "next/image";
 
 const EventPage = ({params}) => {
     const id = params.id
     const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [guestList, setGuestList] = useState([]);
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
     useEffect(() => {
         setLoading(true)
         fetch('/events.json')
@@ -21,13 +29,27 @@ const EventPage = ({params}) => {
                     }
                 }
             })
-            .catch((error) => console.error("Fetching blogs failed:", error));
+            .catch((error) => console.error("Fetching events failed:", error));
     }, [id]);
 
     useEffect(() => {
         if (!event) return
         setLoading(false)
     }, [event])
+
+    const fetchGuests = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/get/${id}/guests`);
+            if (!response.ok){
+                throw new Error("Network response was not ok");
+            }
+            const guests = await response.json();
+            setGuestList(guests);
+            toggleModal();
+        } catch(error){
+            console.log("Failed to fetch guests: ", error);
+        }
+    };
 
     return (
         <div>
@@ -63,9 +85,9 @@ const EventPage = ({params}) => {
                                     {event.location}
                                 </div>
                                 <div className={'flex xl:flex-row flex-col my-10 items-center justify-center xl:gap-10 min-w-full gap-5'}>
-                                    <button className={'event-btn py-3 px-10'}>
-                                        Show guest list
-                                    </button>
+                                <button className={'event-btn py-3 px-10'} onClick={fetchGuests}>
+                                    Show guest list
+                                </button>
                                     <button className={'event-btn p-3 px-10'}>
                                         Buy tickets
                                     </button>
@@ -84,6 +106,7 @@ const EventPage = ({params}) => {
                     <Footer></Footer>
                 </div>
             )}
+            <GuestListModal isOpen={isModalOpen} toggleModal={toggleModal} guestList={guestList} />
         </div>
     );
 }
