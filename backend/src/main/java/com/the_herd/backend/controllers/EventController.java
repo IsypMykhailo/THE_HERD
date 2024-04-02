@@ -62,6 +62,7 @@ public class EventController {
 
     @GetMapping("/get/{id}/guests")
     public ResponseEntity<?> getEventGuests(@PathVariable UUID id) {
+        System.out.println("Getting Guests");
         Optional<Event> eventOptional = eventRepository.findById(id);
         if (eventOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
