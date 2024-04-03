@@ -18,9 +18,13 @@ public class Ticket {
     @JoinColumn(name = "eventId", nullable = false)
     @Getter
     @Setter
-
     private Event event; 
-    
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @Getter
+    @Setter
+    private UUID userId;
 
     @Getter
     @Setter
