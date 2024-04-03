@@ -3,6 +3,7 @@ package com.the_herd.backend.controllers;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -25,6 +26,9 @@ import com.the_herd.backend.repositories.TicketRepository;
 import com.the_herd.backend.models.Event;
 import com.the_herd.backend.models.Ticket;
 import com.the_herd.backend.controllers.responses.GuestResponse;
+import com.the_herd.backend.repositories.UserRepository;
+import com.the_herd.backend.models.user.User;
+
 
 
 @RestController
@@ -33,6 +37,7 @@ import com.the_herd.backend.controllers.responses.GuestResponse;
 public class EventController {
     private final EventRepository eventRepository;
     private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -57,7 +62,7 @@ public class EventController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable UUID id) {
-        Event event = eventRepository.findById(id).get();
+        Event event = eventRepository.findById(id).orElse(null);
         if (event == null) {
             return ResponseEntity.notFound().build();
         }
@@ -65,21 +70,27 @@ public class EventController {
     }
 
     @GetMapping("/get/{id}/guests")
-    public ResponseEntity<List<GuestResponse>> getEventGuests(@PathVariable UUID id) {
-        Event event;
-        try {
-            event = eventRepository.findById(id).get();
-        } catch (NoSuchElementException e) {
+    public ResponseEntity<?> getEventGuests(@PathVariable UUID id) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if (event == null) {
             return ResponseEntity.notFound().build();
         }
 
         List<Ticket> eventTickets = ticketRepository.findByEvent_EventId(id);
+        List<UUID> userIds = eventTickets.stream().map(ticket -> (UUID) ticket.getUser().getId()).collect(Collectors.toList());
 
-        List<GuestResponse> guestsInfo = eventTickets.stream()
-                .map(ticket -> new GuestResponse(ticket.getFirstName(), ticket.getLastName(), ticket.getEmail()))
-                .collect(Collectors.toList());
-
+       
+        List<GuestResponse> guestsInfo = getUserInfo(userIds);
         return ResponseEntity.ok(guestsInfo);
+    }
+
+    private List<GuestResponse> getUserInfo(List<UUID> userIds) {
+        List<User> users = userRepository.findByUserIdIn(userIds);
+        List<GuestResponse> guestsInfo = new ArrayList<>();
+        for (User user : users) {
+            guestsInfo.add(new GuestResponse(user.getFirstName(), user.getLastName(), user.getEmail()));
+        }
+        return guestsInfo;
     }
 
 
