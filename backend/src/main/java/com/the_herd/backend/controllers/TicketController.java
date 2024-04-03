@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.the_herd.backend.repositories.TicketRepository;
+import com.the_herd.backend.repositories.UserRepository;
 import com.the_herd.backend.models.Ticket;
+import com.the_herd.backend.models.user.User;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +33,7 @@ public class TicketController {
 
     private final TicketRepository ticketRepository;
     private final EventRepository eventRepository;
+    private final UserRepository userRepository;
 
     //Creating a ticket: Creating a reservation on a ticket
     @PostMapping("/create")
@@ -37,13 +42,19 @@ public class TicketController {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String email = auth.getName();
+            
             Ticket ticket = new Ticket();
+            Optional<User> userOptional = userRepository.findByEmail(email);
+
+           if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            ticket.setUserId(user.getId());
             ticket.setPrice(request.getPrice());
-            ticket.setFirstName(request.getFirstName());
-            ticket.setLastName(request.getLastName());
             ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
             ticketRepository.save(ticket);
             return ResponseEntity.ok(ticket);
+        } //
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
