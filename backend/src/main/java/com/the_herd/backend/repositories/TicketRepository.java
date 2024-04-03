@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
+
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
-    Optional<Ticket> findByFirstNameAndLastName(String firstName, String lastName);
+    Optional<Ticket> findByUserId(UUID userId);
 }
