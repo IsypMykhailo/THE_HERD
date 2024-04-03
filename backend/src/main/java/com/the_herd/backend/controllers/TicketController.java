@@ -54,7 +54,9 @@ public class TicketController {
             ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
             ticketRepository.save(ticket);
             return ResponseEntity.ok(ticket);
-        } //
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        }
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
