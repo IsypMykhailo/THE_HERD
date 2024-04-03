@@ -18,19 +18,9 @@ public class Ticket {
     @JoinColumn(name = "eventId", nullable = false)
     @Getter
     @Setter
+
     private Event event; 
-
-    @Getter
-    @Setter
-    private String firstName;
-
-    @Getter
-    @Setter
-    private String lastName;
-
-    @Getter
-    @Setter
-    private String email;
+    
 
     @Getter
     @Setter
