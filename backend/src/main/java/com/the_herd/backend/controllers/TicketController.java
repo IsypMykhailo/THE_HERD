@@ -33,12 +33,11 @@ public class TicketController {
     //Creating a ticket: Creating a reservation on a ticket
     @PostMapping("/create")
     public ResponseEntity<?> createTicket(@RequestBody TicketRequest request) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
+        
         try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
             Ticket ticket = new Ticket();
-            ticket.setEmail(email);
             ticket.setPrice(request.getPrice());
             ticket.setFirstName(request.getFirstName());
             ticket.setLastName(request.getLastName());
