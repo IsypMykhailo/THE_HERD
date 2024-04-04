@@ -5,11 +5,12 @@ import Footer from "@/app/_components/Footer";
 import '../../_css/Events.css'
 import Event from "@/app/_components/events/Event";
 import {useEffect, useState} from "react";
+import nextConfig from "@/next.config.mjs";
 
 const Events = () => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
-        fetch('https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/events/get/all')
+        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/all')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response failed');

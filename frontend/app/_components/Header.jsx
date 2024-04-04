@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Loading from "@/app/_components/Loading";
+import nextConfig from "@/next.config.mjs";
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -13,7 +14,7 @@ const Header = () => {
 
     const logOut = async () => {
         try {
-            const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/logout", {
+            const response = await fetch(nextConfig.env.apiUrl + "/logout", {
                 method: 'POST',
                 credentials: 'include',
             });
@@ -43,7 +44,7 @@ const Header = () => {
                 token: token
             }
             try {
-                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
+                const response = await fetch(nextConfig.env.apiUrl + "/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
