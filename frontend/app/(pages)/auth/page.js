@@ -8,6 +8,7 @@ import SignUp from "../../_components/auth/SignUp";
 import Login from "../../_components/auth/Login";
 import Image from "next/image";
 import Cookies from 'js-cookie';
+import nextConfig from "@/next.config.mjs";
 
 const Auth = () => {
     const router = useRouter()
@@ -32,7 +33,7 @@ const Auth = () => {
                 token: token
             }
             try {
-                const response = await fetch("https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/validateSession", {
+                const response = await fetch(nextConfig.env.apiUrl + "/api/v1/auth/validateSession", {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
@@ -56,7 +57,7 @@ const Auth = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/register';
+        const apiUrl = nextConfig.env.apiUrl + '/api/v1/auth/register';
 
         const payload = {
             firstName: firstName,
@@ -91,7 +92,7 @@ const Auth = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const apiUrl = 'https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/auth/authenticate';
+        const apiUrl = nextConfig.env.apiUrl + '/api/v1/auth/authenticate';
 
         const payload = {
             email: email,
