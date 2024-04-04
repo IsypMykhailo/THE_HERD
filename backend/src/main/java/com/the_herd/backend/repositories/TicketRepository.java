@@ -9,5 +9,5 @@ import java.util.List;
 
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
-    Optional<Ticket> findByUserId(UUID userId);
+    
 }
