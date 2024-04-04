@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+import com.the_herd.backend.models.user.User;
+
 @Entity
 @Table(name = "tickets")
 
@@ -24,7 +26,7 @@ public class Ticket {
     @JoinColumn(name = "id")
     @Getter
     @Setter
-    private UUID userId;
+    private User user;
 
     @Getter
     @Setter
