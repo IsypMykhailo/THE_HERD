@@ -6,6 +6,7 @@ import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
 import Image from "next/image";
 import {formatDate, formatTime} from "@/app/_utils/parseUtils";
+import nextConfig from "@/next.config.mjs";
 
 const EventPage = ({params}) => {
     const id = params.id
@@ -13,7 +14,7 @@ const EventPage = ({params}) => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        fetch('https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/events/get/' + id)
+        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/' + id)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.descriptionArray)
