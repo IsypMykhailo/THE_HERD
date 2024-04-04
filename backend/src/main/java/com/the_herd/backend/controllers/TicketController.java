@@ -49,7 +49,7 @@ public class TicketController {
            if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            
+            ticket.setUser(user);
             ticket.setPrice(request.getPrice());
             ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
             ticketRepository.save(ticket);
