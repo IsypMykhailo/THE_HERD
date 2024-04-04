@@ -28,7 +28,7 @@ const Hosts = () => {
                 <div className="overflow-hidden hosts-image"
                      style={{backgroundImage: 'url(/assets/img/konstantin-photo.JPG)', backgroundSize: 'cover'}}></div>
                 <div className={"hosts-info-container hosts-info-second"}>
-                    <div className={"flex flex-col items-start justify-start hosts-description-container"}
+                    <div className={"flex flex-col hosts-description-container"}
                          style={{ marginRight: 20 }}>
                         <div className={"hosts-name"}>
                             KONSTANTIN TOVSHTEIN

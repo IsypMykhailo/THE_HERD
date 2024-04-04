@@ -4,13 +4,14 @@ import '../../_css/Home.css';
 import UpcomingParty from "./UpcomingParty";
 import {useEffect, useState} from "react";
 import {formatDate, formatTime} from "@/app/_utils/parseUtils";
+import nextConfig from "@/next.config.mjs";
 
 const Events = () => {
     const [events, setEvents] = useState(null);
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         setLoading(true)
-        fetch('https://the-herd.braverock-df19d8cb.eastus.azurecontainerapps.io/api/v1/events/get/all')
+        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/all')
             .then((response) => response.json())
             .then((data) => {
                 setEvents(data)
