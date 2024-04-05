@@ -13,44 +13,24 @@ const Header = () => {
     const [loadingClass, setLoadingClass] = useState('')
 
     const logOut = async () => {
-        try {
-            const response = await fetch(nextConfig.env.apiUrl + "/logout", {
-                method: 'POST',
-                credentials: 'include',
-            });
-
-            if (response.status === 200) {
-                setIsLoggedIn(false);
-                Cookies.set('token', '');
-                Cookies.set('email', '');
-            }
-        } catch (error) {
-            console.error("Failed to log out", error)
-            setIsLoggedIn(true)
-        }
+        localStorage.removeItem("token");
+        setIsLoggedIn(false)
     }
 
     useEffect(() => {
         setHeaderLoading(true)
         const validateSession = async () => {
-            const token = Cookies.get('token')
-            const email = Cookies.get('email')
-            if (token === '' || email === '' || token === undefined || email === undefined) {
+            if (localStorage.getItem("token") == null) {
                 setIsLoggedIn(false)
                 return;
             }
-            const payload = {
-                email: email,
-                token: token
-            }
             try {
-                const response = await fetch(nextConfig.env.apiUrl + "/api/v1/auth/validateSession", {
+                const response = await fetch(nextConfig.env.apiUrl + "/api/auth/validateSession", {
                     method: 'POST',
-                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    }
                 });
 
                 if (response.status === 200) {

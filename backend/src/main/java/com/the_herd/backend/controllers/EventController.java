@@ -28,7 +28,7 @@ public class EventController {
     private final EventRepository eventRepository;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createEvent(@RequestBody EventRequest request) {
         try {
             Event event = new Event();
@@ -56,7 +56,7 @@ public class EventController {
 
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> updateEvent(@PathVariable UUID id, @RequestBody EventRequest request) {
         try {
             Event event = eventRepository.findById(id).get();
