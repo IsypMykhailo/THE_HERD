@@ -10,7 +10,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-
 @Entity
 @Table(name = "tickets")
 
@@ -26,22 +25,10 @@ public class Ticket {
     private Event event; 
 
     @OneToOne
-    @JoinColumn(name = "userId", nullable = false, unique = true)
+    @JoinColumn(name = "userId", nullable = false)
     @Getter
     @Setter
     private User user;
-
-    @Getter
-    @Setter
-    private String firstName;
-
-    @Getter
-    @Setter
-    private String lastName;
-
-    @Getter
-    @Setter
-    private String email;
 
     @Getter
     @Setter
