@@ -64,7 +64,7 @@ public class TicketController {
 
     //reading a ticket: checking information on a reserved ticket
     @GetMapping("/get/{id}")
-    @PreAuthorize("#email == authentication.principal.username or hasAuthority('ADMIN')")
+    @PreAuthorize("#email == authentication.principal.username or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getTicketById(@PathVariable UUID id) {
         return ticketRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -73,7 +73,7 @@ public class TicketController {
 
     //Deleting a ticket: Deleting a reservation on a ticket    
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteTicket(@PathVariable UUID id) {
         return ticketRepository.findById(id)
                 .map(ticket -> {

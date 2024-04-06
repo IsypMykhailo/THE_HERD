@@ -1,8 +1,11 @@
 package com.the_herd.backend.controllers;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import java.util.List;
+
 
 import com.the_herd.backend.controllers.requests.EventRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +20,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.the_herd.backend.repositories.EventRepository;
+import com.the_herd.backend.repositories.TicketRepository;
 import com.the_herd.backend.models.Event;
+import com.the_herd.backend.models.Ticket;
+import com.the_herd.backend.controllers.responses.GuestResponse;
+
+
+
+
 
 @RestController
 @RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
 public class EventController {
     private final EventRepository eventRepository;
+    private final TicketRepository ticketRepository;
+
 
     @PostMapping("/create")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> createEvent(@RequestBody EventRequest request) {
         try {
             Event event = new Event();
@@ -50,30 +61,45 @@ public class EventController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable UUID id) {
-        Optional<Event> event = eventRepository.findById(id);
-        return event.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Event event = eventRepository.findById(id).orElse(null);
+        if (event == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(event);
+    }
+
+    @GetMapping("/get/{id}/guests")
+    public ResponseEntity<?> getEventGuests(@PathVariable UUID id) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if (event == null) {
+            return ResponseEntity.notFound().build();
+        }
+    
+        List<Ticket> eventTickets = ticketRepository.findByEvent_EventId(id);
+    
+        List<GuestResponse> guestsInfo = eventTickets.stream()
+            .map(ticket -> new GuestResponse(ticket.getUser().getFirstName(), ticket.getUser().getLastName(), ticket.getUser().getEmail()))
+            .collect(Collectors.toList());
+    
+        return ResponseEntity.ok(guestsInfo);
     }
 
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> updateEvent(@PathVariable UUID id, @RequestBody EventRequest request) {
         try {
             Event event = eventRepository.findById(id).get();
-
             event.setName(request.getName());
             event.setLocation(request.getLocation());
             event.setStartTime(LocalDateTime.parse(request.getStartTime()));
             event.setEventPoster(request.getEventPoster());
-
             eventRepository.save(event);
-
             return ResponseEntity.ok(event);
         } catch (Exception ex) {
             return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteEvent(@PathVariable UUID id) {
@@ -83,5 +109,4 @@ public class EventController {
         eventRepository.deleteById(id);
         return ResponseEntity.accepted().build();
     }
-
 }
