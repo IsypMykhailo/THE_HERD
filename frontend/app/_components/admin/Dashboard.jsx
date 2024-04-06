@@ -7,9 +7,6 @@ import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "./Header";
-import LineChart from "./LineChart";
-import GeographyChart from "./GeographyChart";
-import BarChart from "./BarChart";
 import StatBox from "./StatBox";
 import ProgressCircle from "./ProgressCircle";
 
@@ -39,7 +36,6 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      {/* GRID & CHARTS */}
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -162,7 +158,6 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
           </Box>
         </Box>
         <Box
@@ -256,7 +251,6 @@ const Dashboard = () => {
             Sales Quantity
           </Typography>
           <Box height="250px" mt="-20px">
-            <BarChart isDashboard={true} />
           </Box>
         </Box>
         <Box
@@ -270,10 +264,8 @@ const Dashboard = () => {
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Geography Based Traffic
           </Typography>
           <Box height="200px">
-            <GeographyChart isDashboard={true} />
           </Box>
         </Box>
       </Box>
