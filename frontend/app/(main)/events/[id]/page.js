@@ -6,6 +6,8 @@ import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
 import GuestListModal from "@/app/_components/GuestListModal";
 import Image from "next/image";
+import {formatDate, formatTime} from "@/app/_utils/parseUtils";
+import nextConfig from "@/next.config.mjs";
 
 const EventPage = ({params}) => {
     const id = params.id
@@ -20,14 +22,13 @@ const EventPage = ({params}) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch('/events.json')
+        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/' + id)
             .then((response) => response.json())
             .then((data) => {
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i].id === id) {
-                        setEvent(data[i])
-                    }
-                }
+                console.log(data.descriptionArray)
+                data.descriptionArray = JSON.parse(data.descriptionArray)
+                console.log(data.descriptionArray)
+                setEvent(data)
             })
             .catch((error) => console.error("Fetching events failed:", error));
     }, [id]);
@@ -61,7 +62,7 @@ const EventPage = ({params}) => {
                     <div className={'w-full event-container py-10 flex flex-col justify-center items-center'}>
                         <Image
                             src={event.eventPoster}
-                            alt={`Image ${event.id}`}
+                            alt={`Image ${event.eventId}`}
                             width={0} height={0} unoptimized
                             className={'event-info-poster'}
                             style={{
@@ -75,10 +76,10 @@ const EventPage = ({params}) => {
                                 </div>
                                 <div className={'flex flex-row items-center mt-1'}>
                                     <div className={'event-page-date'}>
-                                        {event.date}
+                                        {formatDate(event.date)}
                                     </div>
                                     <div className={'event-time ml-2'}>
-                                        {event.startTime}
+                                        {formatTime(event.startTime)}
                                     </div>
                                 </div>
                                 <div className={'mt-1 event-location'}>
@@ -96,7 +97,7 @@ const EventPage = ({params}) => {
                                     About this event
                                 </div>
                                 <div className={'mt-2 event-description'}>
-                                    {event.description.map((el, index) => (
+                                    {event.descriptionArray.map((el, index) => (
                                         <div key={index}>{el}</div>
                                     ))}
                                 </div>

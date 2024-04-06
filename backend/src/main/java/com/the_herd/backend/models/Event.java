@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.List;
 
 
 @Entity
@@ -16,11 +18,12 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private UUID eventId;
 
     @Getter
     @Setter
-    private String name;
+    private String eventPoster;
 
     @Getter
     @Setter
@@ -32,6 +35,13 @@ public class Event {
 
     @Getter
     @Setter
-    @Nullable
-    private byte[] eventPoster;
+    private String name;
+
+    @Getter
+    @Setter
+    private LocalDate date;
+
+    @Getter
+    @Setter
+    private String descriptionArray;
 }

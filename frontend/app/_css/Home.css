@@ -116,8 +116,10 @@ html {
 
 .hosts-info-second {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    /*flex-direction: column;*/
+    /*justify-content: flex-end;*/
+    /*align-items: flex-end;*/
+    align-items: center;
 }
 
 .hosts-label {
@@ -151,7 +153,7 @@ html {
     text-align: left;
     font-size: 24px;
     line-height: 25px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* EVENTS */
@@ -269,6 +271,7 @@ html {
     }
 
     .hosts-info-second {
+        flex-direction: column;
         align-items: flex-start;
         margin-left: 36px;
         margin-right: 0;
