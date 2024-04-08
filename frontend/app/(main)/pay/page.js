@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import Image from "next/image";
 import '../../_css/Pay.css';
 import payment from "../../_components/pay/payment";
+import nextConfig from "@/next.config.mjs";
 
 
 
