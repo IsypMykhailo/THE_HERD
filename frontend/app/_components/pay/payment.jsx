@@ -18,10 +18,13 @@ const PaymentForm = ({
     setExpiry,
     setCVV,
     handlePayment
+
 }) => {
+
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     useEffect(() => {
+
         const cardNumberField = document.getElementById('cardNumber');
         const expiryField = document.getElementById('expiry');
         const cvvField = document.getElementById('cvv');
@@ -30,6 +33,7 @@ const PaymentForm = ({
     }, [amount, currency, cardNumber, expiry, cvv]);
 
     return (
+
         <form onSubmit={handlePayment} className={"form max-w-[560px]"}>
             <div className={"my-6 mx-3"}>
                 <input
@@ -83,12 +87,14 @@ const PaymentForm = ({
                     onChange={(e) => setCVV(e.target.value)}
                     required={true}
                 />
+
             </div>
             <div className={"text-center my-6 mx-3 flex flex-col"}>
                 <button type={"submit"} className={"btn btn-submit mb-3"} disabled={isSubmitDisabled}>Make Payment</button>
             </div>
         </form>
     );
+
 }
 
 export default PaymentForm;
