@@ -3,6 +3,7 @@
 import React from 'react';
 import '../../_css/Auth.css';
 
+
 const SignUp = ({
                     firstName,
                     lastName,
