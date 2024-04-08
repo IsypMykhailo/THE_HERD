@@ -10,6 +10,7 @@ import nextConfig from "@/next.config.mjs";
 
 
 const Pay = (e) => {
+
     const router = useRouter();
     const [amount, setAmount] = useState('');
     const [currency, setCurrency] = useState('usd');
@@ -19,6 +20,7 @@ const Pay = (e) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     React.useEffect(() => {
+
         const createpaymentintent = async (e) => {
             e.preventDefault();
             try {
@@ -34,7 +36,9 @@ const Pay = (e) => {
                             ,currency: currency
                             ,method: method
                         })
+
                     });
+
                     if (response.status === 200) {
                         console.log('Payment successful')
                     } else {
@@ -42,11 +46,14 @@ const Pay = (e) => {
                         setErrorMessage('Failed to process payment. Please try again.');
                     }
                 } 
+
             } catch (error) {
                 console.error('Failed to create PaymentIntent:', error.message);
                 setErrorMessage('Failed to process payment. Please try again.');
             }
+
         }
+
     });
 
 
@@ -62,6 +69,7 @@ return (
             <div className={"text-center text-5xl py-10"}>
                     <h1 className={"payment"}>Payment</h1>
         </div>
+        
         <Payment  
             setAmount = {setAmount}
             setCurrency = {setCurrency}
@@ -72,6 +80,7 @@ return (
     </div>
     </div>
 );
+
 }
 
 export default Pay;
