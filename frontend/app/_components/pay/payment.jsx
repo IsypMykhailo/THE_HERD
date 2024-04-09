@@ -1,10 +1,7 @@
 'use client'
 
-import React from 'react';
 import '../../_css/Pay.css';
-
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PaymentForm = ({
     amount,
