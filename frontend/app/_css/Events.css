@@ -87,6 +87,11 @@
     font-weight: 600;
     letter-spacing: -0.2px;
     width: 50%;
+    transition: 0.2s;
+}
+
+.event-btn:hover {
+    opacity: 70%;
 }
 
 .event-about {

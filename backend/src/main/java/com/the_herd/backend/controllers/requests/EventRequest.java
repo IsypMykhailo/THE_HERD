@@ -1,6 +1,5 @@
 package com.the_herd.backend.controllers.requests;
 
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

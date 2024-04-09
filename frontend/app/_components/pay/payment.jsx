@@ -1,22 +1,22 @@
 'use client'
 
 import '../../_css/Pay.css';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 const PaymentForm = ({
-    amount,
-    currency,
-    cardNumber,
-    expiry,
-    cvv,
-    setAmount,
-    setCurrency,
-    setCardNumber,
-    setExpiry,
-    setCVV,
-    handlePayment
+                         amount,
+                         currency,
+                         cardNumber,
+                         expiry,
+                         cvv,
+                         setAmount,
+                         setCurrency,
+                         setCardNumber,
+                         setExpiry,
+                         setCVV,
+                         handlePayment
 
-}) => {
+                     }) => {
 
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
@@ -87,7 +87,8 @@ const PaymentForm = ({
 
             </div>
             <div className={"text-center my-6 mx-3 flex flex-col"}>
-                <button type={"submit"} className={"btn btn-submit mb-3"} disabled={isSubmitDisabled}>Make Payment</button>
+                <button type={"submit"} className={"btn btn-submit mb-3"} disabled={isSubmitDisabled}>Make Payment
+                </button>
             </div>
         </form>
     );

@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import '../../../_css/Events.css'
 import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
-import GuestListModal from "@/app/_components/GuestListModal";
+import GuestListModal from "../../../_components/GuestListModal"
 import Image from "next/image";
 import {formatDate, formatTime} from "@/app/_utils/parseUtils";
 import nextConfig from "@/next.config.mjs";
@@ -22,7 +22,7 @@ const EventPage = ({params}) => {
 
     useEffect(() => {
         setLoading(true)
-        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/' + id)
+        fetch(nextConfig.env.apiUrl + '/api/events/get/' + id)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.descriptionArray)
@@ -31,26 +31,28 @@ const EventPage = ({params}) => {
                 setEvent(data)
             })
             .catch((error) => console.error("Fetching events failed:", error));
+
+        const fetchGuests = async () => {
+            try {
+                const response = await fetch(nextConfig.env.apiUrl + `/api/events/get/${id}/guests`);
+                if (!response.ok){
+                    throw new Error("Network response was not ok");
+                }
+                const guests = await response.json();
+                setGuestList(guests);
+            } catch(error){
+                console.log("Failed to fetch guests: ", error);
+            }
+        };
+
+        fetchGuests();
+
     }, [id]);
 
     useEffect(() => {
-        if (!event) return
+        if (!event || !guestList) return
         setLoading(false)
-    }, [event])
-
-    const fetchGuests = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/v1/get/${id}/guests`);
-            if (!response.ok){
-                throw new Error("Network response was not ok");
-            }
-            const guests = await response.json();
-            setGuestList(guests);
-            toggleModal();
-        } catch(error){
-            console.log("Failed to fetch guests: ", error);
-        }
-    };
+    }, [event, guestList])
 
     return (
         <div>
@@ -85,8 +87,11 @@ const EventPage = ({params}) => {
                                 <div className={'mt-1 event-location'}>
                                     {event.location}
                                 </div>
+                                <div className={'mt-1 event-location'}>
+                                    {guestList.length} guest(s)
+                                </div>
                                 <div className={'flex xl:flex-row flex-col my-10 items-center justify-center xl:gap-10 min-w-full gap-5'}>
-                                <button className={'event-btn py-3 px-10'} onClick={fetchGuests}>
+                                <button className={'event-btn py-3 px-10'} onClick={toggleModal}>
                                     Show guest list
                                 </button>
                                     <button className={'event-btn p-3 px-10'}>

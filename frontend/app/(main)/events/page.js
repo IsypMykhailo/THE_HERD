@@ -10,7 +10,7 @@ import nextConfig from "@/next.config.mjs";
 const Events = () => {
     const [events, setEvents] = useState([]);
     useEffect(() => {
-        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/all')
+        fetch(nextConfig.env.apiUrl + '/api/events/get/all')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response failed');

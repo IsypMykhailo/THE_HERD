@@ -17,7 +17,7 @@ import com.the_herd.backend.config.StripeConfig;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api")
 public class PaymentController {
 
     @Autowired

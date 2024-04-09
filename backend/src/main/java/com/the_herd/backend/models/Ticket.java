@@ -35,6 +35,6 @@ public class Ticket {
     private double price;
 
     public GuestResponse toGuestResponse() {
-        return new GuestResponse(this.firstName, this.lastName, this.email);
+        return new GuestResponse(user.getFirstName(), user.getLastName(), user.getEmail());
     }
 }

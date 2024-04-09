@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/v1/ticket")
+@RequestMapping("/api/ticket")
 @RequiredArgsConstructor
 public class TicketController {
 

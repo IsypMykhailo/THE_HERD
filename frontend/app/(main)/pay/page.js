@@ -22,12 +22,12 @@ const Pay = (e) => {
         const createPaymentIntent = async (e) => {
             e.preventDefault();
             try {
-                if(localStorage.getItem("token") != null) {
-                    const response = await fetch(nextConfig.env.apiUrl + "/api/v1/create-payment-intent", {
+                if (localStorage.getItem("token") != null) {
+                    const response = await fetch(nextConfig.env.apiUrl + "/api/create-payment-intent", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
-                            ,'Authorization': 'Bearer ' + localStorage.getItem("token")
+                            , 'Authorization': 'Bearer ' + localStorage.getItem("token")
                         },
                         body: JSON.stringify({
                             amount: amount,
@@ -42,7 +42,7 @@ const Pay = (e) => {
                         console.error('Payment failed:', response.statusText);
                         setErrorMessage('Failed to process payment. Please try again.');
                     }
-                } 
+                }
 
             } catch (error) {
                 console.error('Failed to create PaymentIntent:', error.message);
@@ -54,35 +54,35 @@ const Pay = (e) => {
     });
 
 
-return (
-    <div className={"w-full flex flex-row parent-div"}>
+    return (
+        <div className={"w-full flex flex-row parent-div"}>
 
-        <div className={"party-image-parent"}>
-            <h2 className={"company-name"} onClick={() => router.push("/")}>THE HERD</h2>
-            <Image src={"/assets/img/party-photo.jpg"} alt={"party-photo"} width={0} height={0} unoptimized
-                    className={"party-image object-cover"}/>
-        </div>
-        <div className={"w-full flex flex-col justify-center items-center payment-div"}>
-            <div className={"text-center text-5xl py-10"}>
+            <div className={"party-image-parent"}>
+                <h2 className={"company-name"} onClick={() => router.push("/")}>THE HERD</h2>
+                <Image src={"/assets/img/party-photo.jpg"} alt={"party-photo"} width={0} height={0} unoptimized
+                       className={"party-image object-cover"}/>
+            </div>
+            <div className={"w-full flex flex-col justify-center items-center payment-div"}>
+                <div className={"text-center text-5xl py-10"}>
                     <h1 className={"payment"}>Payment</h1>
+                </div>
+
+                <PaymentForm
+                    amount={amount}
+                    currency={currency}
+                    cardNumber={cardNumber}
+                    expiry={expiry}
+                    cvv={cvv}
+                    setAmount={setAmount}
+                    setCurrency={setCurrency}
+                    setCardNumber={setCardNumber}
+                    setExpiry={setExpiry}
+                    setCVV={setCVV}
+                    handlePayment={() => console.log("payment")}
+                />
+            </div>
         </div>
-        
-        <PaymentForm
-            amount={amount}
-            currency={currency}
-            cardNumber={cardNumber}
-            expiry={expiry}
-            cvv={cvv}
-            setAmount = {setAmount}
-            setCurrency = {setCurrency}
-            setCardNumber = {setCardNumber}
-            setExpiry = {setExpiry}
-            setCVV = {setCVV}
-            handlePayment={() => console.log("payment")}
-        />
-    </div>
-    </div>
-);
+    );
 
 }
 
