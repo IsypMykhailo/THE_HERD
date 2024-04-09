@@ -4,10 +4,8 @@ import React, {useState} from 'react';
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 import '../../_css/Pay.css';
-import payment from "../../_components/pay/payment";
+import PaymentForm from "../../_components/pay/payment";
 import nextConfig from "@/next.config.mjs";
-
-
 
 const Pay = (e) => {
 
@@ -21,20 +19,19 @@ const Pay = (e) => {
 
     React.useEffect(() => {
 
-        const createpaymentintent = async (e) => {
+        const createPaymentIntent = async (e) => {
             e.preventDefault();
             try {
                 if(localStorage.getItem("token") != null) {
-                    const response = await fetch(nextConfig.mjs + "/api/v1/create-payment-intent", {
+                    const response = await fetch(nextConfig.env.apiUrl + "/api/v1/create-payment-intent", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                             ,'Authorization': 'Bearer ' + localStorage.getItem("token")
                         },
                         body: JSON.stringify({
-                            amount: parseInt(amount)
-                            ,currency: currency
-                            ,method: method
+                            amount: amount,
+                            currency: currency
                         })
 
                     });
@@ -70,12 +67,18 @@ return (
                     <h1 className={"payment"}>Payment</h1>
         </div>
         
-        <Payment  
+        <PaymentForm
+            amount={amount}
+            currency={currency}
+            cardNumber={cardNumber}
+            expiry={expiry}
+            cvv={cvv}
             setAmount = {setAmount}
             setCurrency = {setCurrency}
             setCardNumber = {setCardNumber}
             setExpiry = {setExpiry}
             setCVV = {setCVV}
+            handlePayment={() => console.log("payment")}
         />
     </div>
     </div>
