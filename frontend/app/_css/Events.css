@@ -50,6 +50,7 @@
 .event-poster {
     height: 70%;
     width: auto;
+    object-fit: contain;
     /*aspect-ratio: 1/1;*/
 }
 
