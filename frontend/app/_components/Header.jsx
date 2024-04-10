@@ -11,6 +11,7 @@ const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [headerLoading, setHeaderLoading] = useState(true)
     const [loadingClass, setLoadingClass] = useState('')
+    const [isAdmin, setIsAdmin] = useState(null)
 
     const logOut = async () => {
         localStorage.removeItem("token");
@@ -43,18 +44,42 @@ const Header = () => {
             }
         };
 
+        const validateAdmin = async () => {
+            if (localStorage.getItem("token") == null) {
+                setIsAdmin(false)
+                return;
+            }
+            try {
+                const response = await fetch(nextConfig.env.apiUrl + "/api/admin/validate", {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    },
+                });
+
+                if (response.status === 200) {
+                    setIsAdmin(true);
+                } else {
+                    setIsAdmin(false)
+                }
+            } catch (error) {
+                console.error('Failed to validate admin status', error);
+            }
+        };
+
         validateSession();
+        validateAdmin()
     }, []);
 
     useEffect(() => {
         const loadHeader = async () => {
-            if (isLoggedIn === null) return
+            if (isLoggedIn === null || isAdmin === null) return
             setLoadingClass('hidden')
             const timer = setTimeout(() => setHeaderLoading(false), 500);
             return () => clearTimeout(timer);
         }
         loadHeader()
-    }, [isLoggedIn]);
+    }, [isLoggedIn, isAdmin]);
 
     // if (headerLoading) {
     //     return <Loading loadingClass={loadingClass}/>
@@ -92,6 +117,11 @@ const Header = () => {
                     <Link href='/events' className="text-white text-start nav-btn">
                         Events
                     </Link>
+                    {isAdmin && (
+                        <Link href='/admin' className="text-white text-start nav-btn">
+                            Admin
+                        </Link>
+                    )}
                 </div>
                 <div>
                     <svg className="w-auto h-auto" width="130" height="16" viewBox="0 0 130 16" fill="none"

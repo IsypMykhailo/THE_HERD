@@ -11,7 +11,7 @@ const Events = () => {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         setLoading(true)
-        fetch(nextConfig.env.apiUrl + '/api/v1/events/get/all')
+        fetch(nextConfig.env.apiUrl + '/api/events/get/all')
             .then((response) => response.json())
             .then((data) => {
                 setEvents(data)

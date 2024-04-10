@@ -1,97 +1,67 @@
-'use client'
+import React from 'react';
+import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 
-import '../../_css/Pay.css';
-import { useEffect, useState } from 'react';
+const CARD_ELEMENT_OPTIONS = {
+    style: {
+        base: {
+            color: "#fdfeff",
+            fontFamily: '"Inter, sans-serif',
+            fontSize: "16px",
+        },
+        invalid: {
+            color: "#fa755a",
+            iconColor: "#fa755a",
+        },
+        complete: {
+            color: "#00e676",
+        },
+    },
+};
 
-const PaymentForm = ({
-    amount,
-    currency,
-    cardNumber,
-    expiry,
-    cvv,
-    setAmount,
-    setCurrency,
-    setCardNumber,
-    setExpiry,
-    setCVV,
-    handlePayment
+const PaymentForm = ({amount, handlePayment, setIsTierChosen}) => {
+    const stripe = useStripe();
+    const elements = useElements();
 
-}) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+        if (!stripe || !elements) {
+            return;
+        }
 
-    useEffect(() => {
+        const cardElement = elements.getElement(CardElement);
 
-        const cardNumberField = document.getElementById('cardNumber');
-        const expiryField = document.getElementById('expiry');
-        const cvvField = document.getElementById('cvv');
-        const isFormValid = amount !== '' && currency !== '' && cardNumber !== '' && expiry !== '' && cvv !== '' && cardNumberField.validity.valid && expiryField.validity.valid && cvvField.validity.valid;
-        setIsSubmitDisabled(!isFormValid);
-    }, [amount, currency, cardNumber, expiry, cvv]);
+        const {error, paymentMethod} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+        });
+
+        if (error) {
+            console.log('[error]', error);
+        } else {
+            console.log('[PaymentMethod]', paymentMethod);
+            handlePayment(paymentMethod.id);
+        }
+    };
 
     return (
-
-        <form onSubmit={handlePayment} className={"form max-w-[560px]"}>
-            <div className={"my-6 mx-3"}>
-                <input
-                    placeholder={"Amount"}
-                    type={"text"}
-                    className={"w-full form-input"}
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required={true}
-                />
+        <form onSubmit={handleSubmit} className="form max-w-[560px]">
+            <div className="my-6 mx-3">
+                <div className={'w-full form-input'}>${amount}</div>
             </div>
-            <div className={"my-6 mx-3"}>
-                <input
-                    placeholder={"Currency"}
-                    type={"text"}
-                    className={"w-full form-input"}
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    required={true}
-                />
+            <div className="my-6 mx-3">
+                <CardElement options={CARD_ELEMENT_OPTIONS} />
             </div>
-            <div className={"my-6 mx-3"}>
-                <input
-                    id={"cardNumber"}
-                    placeholder={"Card Number"}
-                    type={"text"}
-                    className={"w-full form-input"}
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    required={true}
-                />
-            </div>
-            <div className={"my-6 mx-3"}>
-                <input
-                    id={"expiry"}
-                    placeholder={"Expiry Date"}
-                    type={"text"}
-                    className={"w-full form-input"}
-                    value={expiry}
-                    onChange={(e) => setExpiry(e.target.value)}
-                    required={true}
-                />
-            </div>
-            <div className={"my-6 mx-3"}>
-                <input
-                    id={"cvv"}
-                    placeholder={"CVV"}
-                    type={"text"}
-                    className={"w-full form-input"}
-                    value={cvv}
-                    onChange={(e) => setCVV(e.target.value)}
-                    required={true}
-                />
-
-            </div>
-            <div className={"text-center my-6 mx-3 flex flex-col"}>
-                <button type={"submit"} className={"btn btn-submit mb-3"} disabled={isSubmitDisabled}>Make Payment</button>
+            <div className="text-center my-6 mx-3 flex flex-row gap-2">
+                <button type="button" onClick={() => setIsTierChosen(false)} className='btn btn-submit mb-3 w-[50%] transition-[0.2s]'>
+                    Back
+                </button>
+                <button type="submit" className="btn btn-submit mb-3 w-[50%] transition-[0.2s]" disabled={!stripe}>
+                    Buy
+                </button>
             </div>
         </form>
     );
-
-}
+};
 
 export default PaymentForm;

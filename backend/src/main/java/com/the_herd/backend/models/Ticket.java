@@ -1,6 +1,6 @@
 package com.the_herd.backend.models;
 import com.the_herd.backend.models.user.User;
-import com.the_herd.backend.controllers.responses.GuestResponse;
+import com.the_herd.backend.dto.responses.GuestResponse;
 
 
 
@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name = "tickets")
 
@@ -19,22 +20,16 @@ public class Ticket {
     private UUID ticketId;
 
     @ManyToOne
-    @JoinColumn(name = "eventId", nullable = false)
-    @Getter
+    @JoinColumn(name = "tierId", nullable = false)
     @Setter
-    private Event event; 
+    private Tier tier;
 
     @OneToOne
     @JoinColumn(name = "userId", nullable = false)
-    @Getter
     @Setter
     private User user;
 
-    @Getter
-    @Setter
-    private double price;
-
     public GuestResponse toGuestResponse() {
-        return new GuestResponse(this.firstName, this.lastName, this.email);
+        return new GuestResponse(user.getFirstName(), user.getLastName(), user.getEmail());
     }
 }

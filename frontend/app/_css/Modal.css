@@ -8,25 +8,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 50;
 }
 
 .modal-content {
     background-color: #121416;
-    padding: 20px;
-    border-radius: 0px;
+    border-radius: 0;
     box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px;
     transition: 0.3s;
     width: 80%;
+    height: 80%;
     max-width: 600px;
 }
 
 .modal-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     color: #fdfeff;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.2px;
-    margin-bottom: 20px;
 }
 
 .modal-body {
@@ -38,22 +37,20 @@
 }
 
 .modal-guest-item {
-    border-bottom: 1px solid #242628;
-    padding: 10px 0;
     color: #fdfeff;
     font-weight: 500;
+    height: 50px;
 }
 
 .modal-btn {
     background-color: #8b3c7e;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: #fdfeff;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.2px;
     width: 50%;
     padding: 10px 0;
     text-align: center;
-    margin: 0 auto;
     display: block;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -61,4 +58,43 @@
 
 .modal-btn:hover {
     opacity: 70%;
+}
+
+.profile-image-container {
+
+}
+
+.profile-image {
+    height: 100%;
+    width: auto;
+}
+
+.guests-container {
+    /*border-top-width: thin;*/
+    /*border-top-color: #242628;*/
+    /*border-bottom-width: thin;*/
+    /*border-bottom-color: #242628;*/
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.guest-info{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fdfeff;
+}
+
+.guest-tickets {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 70%;
+}
+
+.search-guests {
+    background-color: #121416;
+    border-width: thin;
+    border-color: #242628;
+    padding: 12px;
+    color: #fdfeff;
 }

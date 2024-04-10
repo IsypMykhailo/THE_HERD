@@ -1,0 +1,10 @@
+.ticket-container {
+    width: 100vw;
+    height: calc(100vh - 84px);
+}
+
+@media (max-width: 1300px) {
+    .ticket-container{
+        height: calc(100vh - 66px);
+    }
+}

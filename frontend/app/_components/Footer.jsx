@@ -39,16 +39,16 @@ const Footer = () => {
                 />
             </svg>
             <div className="flex flex-row gap-[55px]">
-                <div
+                <a
                     className={"footer-link"}
-                     onClick={() => window.location.href = 'https://www.instagram.com/the_herd_van/'}>
+                    href={'https://www.instagram.com/the_herd_van/'} target={'_blank'}>
                     Instagram
-                </div>
-                <div
+                </a>
+                <a
                     className={"footer-link"}
-                     onClick={() => window.location.href = 'https://t.me/the_herd32'}>
+                    href={'https://t.me/the_herd32'} target={'_blank'}>
                     Telegram
-                </div>
+                </a>
             </div>
         </div>
     );
