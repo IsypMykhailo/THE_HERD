@@ -1,4 +1,4 @@
-package com.the_herd.backend.controllers.requests;
+package com.the_herd.backend.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketRequest {
-    private String eventId;
-    private String firstName;
-    private String lastName;
-    private double price;
+    private String tierId;
 }

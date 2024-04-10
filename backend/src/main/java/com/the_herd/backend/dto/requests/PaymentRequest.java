@@ -1,4 +1,4 @@
-package com.the_herd.backend.controllers.requests;
+package com.the_herd.backend.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValidationRequest {
-    private String email;
-    private String token;
+public class PaymentRequest {
+    private String paymentMethodId;
+    private String amount;
 }

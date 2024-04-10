@@ -8,13 +8,16 @@ import GuestListModal from "../../../_components/GuestListModal"
 import Image from "next/image";
 import {formatDate, formatTime} from "@/app/_utils/parseUtils";
 import nextConfig from "@/next.config.mjs";
+import {useRouter} from "next/navigation";
 
 const EventPage = ({params}) => {
+    const router = useRouter()
     const id = params.id
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [guestList, setGuestList] = useState([]);
+    const [isEventPassed, setIsEventPassed] = useState(false)
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -35,12 +38,12 @@ const EventPage = ({params}) => {
         const fetchGuests = async () => {
             try {
                 const response = await fetch(nextConfig.env.apiUrl + `/api/events/get/${id}/guests`);
-                if (!response.ok){
+                if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
                 const guests = await response.json();
                 setGuestList(guests);
-            } catch(error){
+            } catch (error) {
                 console.log("Failed to fetch guests: ", error);
             }
         };
@@ -51,8 +54,15 @@ const EventPage = ({params}) => {
 
     useEffect(() => {
         if (!event || !guestList) return
-        setLoading(false)
+        let eventDate = new Date(event.date)
+        if(Date.now() > eventDate){
+            setIsEventPassed(true)
+        }
     }, [event, guestList])
+
+    useEffect(() => {
+        setLoading(false)
+    }, [isEventPassed]);
 
     return (
         <div>
@@ -90,15 +100,20 @@ const EventPage = ({params}) => {
                                 <div className={'mt-1 event-location'}>
                                     {guestList.length} guest(s)
                                 </div>
-                                <div className={'flex xl:flex-row flex-col my-10 items-center justify-center xl:gap-10 min-w-full gap-5'}>
-                                <button className={'event-btn py-3 px-10'} onClick={toggleModal}>
-                                    Show guest list
-                                </button>
-                                    <button className={'event-btn p-3 px-10'}>
+                                <div
+                                    className={'flex xl:flex-row flex-col my-10 items-center justify-center xl:gap-10 min-w-full gap-5'}>
+                                    <button className={'event-btn py-3 px-10'} onClick={toggleModal}>
+                                        Show guest list
+                                    </button>
+                                    <button onClick={() => router.push(`/events/${id}/tickets/pay`)} className={'event-btn p-3 px-10'} disabled={isEventPassed} style={isEventPassed ? {opacity: 0.7} : {}}>
                                         Buy tickets
                                     </button>
+                                    <button className={'event-btn p-3 px-10'} onClick={() => router.push(`/events/${id}/tickets`)}>
+                                        Show my ticket
+                                    </button>
                                 </div>
-                                <div className={'event-description-label'} style={{color: '#fdfeff', fontSize: '1.5rem', fontWeight: '600'}}>
+                                <div className={'event-description-label'}
+                                     style={{color: '#fdfeff', fontSize: '1.5rem', fontWeight: '600'}}>
                                     About this event
                                 </div>
                                 <div className={'mt-2 event-description'}>
@@ -112,7 +127,7 @@ const EventPage = ({params}) => {
                     <Footer></Footer>
                 </div>
             )}
-            <GuestListModal isOpen={isModalOpen} toggleModal={toggleModal} guestList={guestList} />
+            <GuestListModal isOpen={isModalOpen} toggleModal={toggleModal} guestList={guestList}/>
         </div>
     );
 }

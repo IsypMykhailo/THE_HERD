@@ -1,4 +1,4 @@
-package com.the_herd.backend.dto;
+package com.the_herd.backend.dto.responses;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

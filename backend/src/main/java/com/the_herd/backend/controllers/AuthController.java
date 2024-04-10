@@ -1,8 +1,8 @@
-package com.the_herd.backend.controllers.auth;
+package com.the_herd.backend.controllers;
 
-import com.the_herd.backend.dto.JwtResponse;
-import com.the_herd.backend.dto.SignInRequest;
-import com.the_herd.backend.dto.SignUpRequest;
+import com.the_herd.backend.dto.responses.JwtResponse;
+import com.the_herd.backend.dto.requests.SignInRequest;
+import com.the_herd.backend.dto.requests.SignUpRequest;
 import com.the_herd.backend.models.user.ERole;
 import com.the_herd.backend.models.user.Role;
 import com.the_herd.backend.models.user.User;

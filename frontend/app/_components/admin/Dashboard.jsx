@@ -1,13 +1,48 @@
+'use client'
+
 import { Box, Typography, useTheme } from "@mui/material";
 import { tokens } from "./theme";
-import { mockTransactions } from "../../_data/mockData";
 import Header from "./Header";
+import {useEffect, useState} from "react";
+import nextConfig from "@/next.config.mjs";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [transactions, setTransactions] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  return (
+  useEffect(() => {
+    setLoading(true)
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(nextConfig.env.apiUrl + '/api/transactions/get/all', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem("token")
+          },
+        })
+
+        if(!response.ok) {
+          throw new Error(response.statusText);
+        }
+        const data = await response.json()
+        setTransactions(data)
+      } catch(error) {
+        console.error("Failed to fetch transactions " + error);
+      }
+    }
+
+    fetchTransactions().then(() => setLoading(false))
+  }, [])
+
+  const calculateTotalRevenue = () => {
+    let revenue = 0;
+    transactions.forEach(el => revenue += el.sum);
+    return revenue;
+  }
+
+  return !loading && (
     <Box m="20px" pb={"20px"}>
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -30,9 +65,9 @@ const Dashboard = () => {
             <Typography
                 variant="h3"
                 fontWeight="bold"
-                color={colors.greenAccent[500]}
+                color={"#8b3c7e"}
             >
-              $59,342.32
+              ${calculateTotalRevenue()}
             </Typography>
           </Box>
         </Box>
@@ -41,14 +76,14 @@ const Dashboard = () => {
       {/* GRID & CHARTS */}
       <Box>
         <Box
-          backgroundColor={colors.primary[400]}
+          backgroundColor={'#242628'}
           overflow="auto"
         >
           <Box
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            borderBottom={`4px solid ${colors.primary[500]}`}
+            borderBottom={`4px solid #242628`}
             colors={colors.grey[100]}
             p="15px"
           >
@@ -56,9 +91,9 @@ const Dashboard = () => {
               Recent Transactions
             </Typography>
           </Box>
-          {mockTransactions.map((transaction, i) => (
+          {transactions.map((transaction, i) => (
             <Box
-              key={`${transaction.txId}-${i}`}
+              key={`${i}`}
               display="flex"
               justifyContent="space-between"
               alignItems="center"
@@ -67,23 +102,23 @@ const Dashboard = () => {
             >
               <Box>
                 <Typography
-                  color={colors.greenAccent[500]}
+                  color={"#8b3c7e"}
                   variant="h5"
                   fontWeight="600"
                 >
-                  {transaction.txId}
+                  {transaction.fullName}
                 </Typography>
                 <Typography color={colors.grey[100]}>
-                  {transaction.user}
+                  {transaction.email}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{transaction.date}</Box>
+              <Box color={colors.grey[100]}>{transaction.transactionDate}</Box>
               <Box
-                backgroundColor={colors.greenAccent[500]}
+                backgroundColor={"#8b3c7e"}
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${transaction.cost}
+                ${transaction.sum}
               </Box>
             </Box>
           ))}

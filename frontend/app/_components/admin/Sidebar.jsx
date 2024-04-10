@@ -11,19 +11,26 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import nextConfig from "@/next.config.mjs";
+import Dashboard from "@/app/_components/admin/Dashboard";
+import Team from "@/app/_components/admin/Team";
+import Transactions from "@/app/_components/admin/Transactions";
 
-const Item = ({title, to, icon, selected, setSelected}) => {
+const Item = ({title, icon, selected, setSelected, component, setComponent}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     return (
-        <Link href={to} className={'flex flex-row my-4 p-3 gap-2 items-center hover:opacity-50 transition menu-item'}>
+        <button onClick={() => setComponent(component)} className={'flex flex-row my-4 p-3 gap-2 items-center hover:opacity-50 transition menu-item'}>
             {icon}
             <div>{title}</div>
-        </Link>
+        </button>
+        // <Link href={to} className={'flex flex-row my-4 p-3 gap-2 items-center hover:opacity-50 transition menu-item'}>
+        //     {icon}
+        //     <div>{title}</div>
+        // </Link>
     );
 };
 
-const MySidebar = () => {
+const MySidebar = ({component, setComponent}) => {
     const theme = useTheme();
     const router = useRouter()
     const colors = tokens(theme.palette.mode);
@@ -83,26 +90,22 @@ const MySidebar = () => {
             }}
             height={"100vh"}
         >
-            <Sidebar collapsed={isCollapsed} backgroundColor={colors.primary[400]} className={"h-[100vh]"}>
+            <Sidebar collapsed={isCollapsed} backgroundColor={'#242628'} className={"h-[100vh]"}>
                 <Menu iconShape="square">
                     {/* LOGO AND MENU ICON */}
                     <MenuItem
                         style={{
                             margin: "10px 0 20px 0",
                             color: colors.grey[100],
-                            backgroundColor: colors.primary[400]
+                            alignItems: 'center',
+                            backgroundColor: "#242628"
                         }}
                         className={"hover:opacity-50 transition"}
                     >
                         {!isCollapsed && (
-                            <Box
-                                display="flex"
-                                justifyContent="space-between"
-                                alignItems="center"
-                                ml="15px"
-                            >
-                                <h2 style={{letterSpacing: '4px', fontWeight: 700, fontSize: '24px'}} onClick={() => router.push("/")}>THE HERD</h2>
-                            </Box>
+                            <div>
+                                <h2 style={{letterSpacing: '4px', fontWeight: 700, fontSize: '24px', textAlign: 'center'}} onClick={() => router.push("/")}>THE HERD</h2>
+                            </div>
                         )}
                     </MenuItem>
 
@@ -113,11 +116,11 @@ const MySidebar = () => {
                                     variant="h2"
                                     color={colors.grey[100]}
                                     fontWeight="bold"
-                                    sx={{m: "10px 0 0 0"}}
+                                    sx={{m: "0 0 10px 0"}}
                                 >
                                     {adminData.firstName + ' ' + adminData.lastName}
                                 </Typography>
-                                <Typography variant="h5" color={colors.greenAccent[500]}>
+                                <Typography variant="h5" color={'#8b3c7e'}>
                                     THE HERD Admin
                                 </Typography>
                             </Box>
@@ -127,7 +130,8 @@ const MySidebar = () => {
                     <Box paddingLeft={isCollapsed ? undefined : "10%"}>
                         <Item
                             title="Dashboard"
-                            to={'/admin'}
+                            component={<Dashboard></Dashboard>}
+                            setComponent={setComponent}
                             icon={<HomeOutlinedIcon/>}
                             selected={selected}
                             setSelected={setSelected}
@@ -142,30 +146,17 @@ const MySidebar = () => {
                         </Typography>
                         <Item
                             title="Manage Team"
-                            to={'/admin/team'}
+                            component={<Team></Team>}
+                            setComponent={setComponent}
                             icon={<PeopleOutlinedIcon/>}
                             selected={selected}
                             setSelected={setSelected}
                         />
                         <Item
-                            title="Invoices Balances"
-                            to={'/admin/invoices'}
+                            title="Transactions"
+                            component={<Transactions></Transactions>}
+                            setComponent={setComponent}
                             icon={<ReceiptOutlinedIcon/>}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />
-
-                        <Typography
-                            variant="h6"
-                            color={colors.grey[300]}
-                            sx={{m: "15px 0 5px 20px"}}
-                        >
-                            Pages
-                        </Typography>
-                        <Item
-                            title="Calendar"
-                            to={'/admin/calendar'}
-                            icon={<CalendarTodayOutlinedIcon/>}
                             selected={selected}
                             setSelected={setSelected}
                         />

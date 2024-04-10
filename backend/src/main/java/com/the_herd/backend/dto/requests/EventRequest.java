@@ -1,4 +1,4 @@
-package com.the_herd.backend.controllers.requests;
+package com.the_herd.backend.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

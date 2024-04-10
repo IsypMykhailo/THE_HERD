@@ -1,7 +1,12 @@
 package com.the_herd.backend.controllers;
 
-import com.the_herd.backend.controllers.requests.TicketRequest;
+import com.the_herd.backend.dto.requests.TicketRequest;
+import com.the_herd.backend.models.Event;
+import com.the_herd.backend.models.Tier;
+import com.the_herd.backend.models.user.ERole;
 import com.the_herd.backend.repositories.EventRepository;
+import com.the_herd.backend.repositories.TierRepository;
+import com.the_herd.backend.services.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -14,8 +19,7 @@ import com.the_herd.backend.repositories.UserRepository;
 import com.the_herd.backend.models.Ticket;
 import com.the_herd.backend.models.user.User;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class TicketController {
 
     private final TicketRepository ticketRepository;
-    private final EventRepository eventRepository;
+    private final TierRepository tierRepository;
     private final UserRepository userRepository;
 
     //Creating a ticket: Creating a reservation on a ticket
@@ -50,8 +54,11 @@ public class TicketController {
             User user = userOptional.get();
 
             ticket.setUser(user);
-            ticket.setPrice(request.getPrice());
-            ticket.setEvent(eventRepository.findById(UUID.fromString(request.getEventId())).get());
+            Tier tier = tierRepository.findById(UUID.fromString(request.getTierId())).orElse(null);
+            if(tier == null) {
+                return ResponseEntity.notFound().build();
+            }
+            ticket.setTier(tier);
             ticketRepository.save(ticket);
             return ResponseEntity.ok(ticket);
         } else {
@@ -64,11 +71,41 @@ public class TicketController {
 
     //reading a ticket: checking information on a reserved ticket
     @GetMapping("/get/{id}")
-    @PreAuthorize("#email == authentication.principal.username or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getTicketById(@PathVariable UUID id) {
-        return ticketRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        User user = userRepository.findById(userDetails.getId()).orElse(null);
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        if(ticket == null) {
+            return ResponseEntity.notFound().build();
+        } else if (user != null && (Objects.equals(ticket.getUser().getEmail(), user.getEmail()) || user.getRoles().stream().anyMatch(r -> r.getName() == ERole.ROLE_ADMIN))) {
+            return ResponseEntity.ok(ticket);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/get/event/{eventId}")
+    public ResponseEntity<?> getByEventId(@PathVariable UUID eventId) {
+        try{
+            List<Tier> tiers = tierRepository.findAllByEvent_EventId(eventId).orElse(null);
+            if(tiers == null) {
+                return ResponseEntity.notFound().build();
+            }
+            List<Ticket> eventTickets = new ArrayList<>();
+            for(Tier tier: tiers) {
+                List<Ticket> tickets = ticketRepository.findByTier_Id(tier.getId());
+                eventTickets.addAll(tickets);
+            }
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+            User user = userRepository.findById(userDetails.getId()).orElse(null);
+
+            Ticket myTicket = eventTickets.stream().filter(t -> t.getUser() == user).findFirst().get();
+            return ResponseEntity.ok(myTicket);
+        } catch (Exception ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     //Deleting a ticket: Deleting a reservation on a ticket    

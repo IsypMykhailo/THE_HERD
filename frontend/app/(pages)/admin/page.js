@@ -14,10 +14,10 @@ import Loading from "@/app/_components/Loading";
 const Admin = () => {
     const router = useRouter();
     const [theme, colorMode] = useMode();
-    const [isSidebar, setIsSidebar] = useState(true);
     const [isAdmin, setIsAdmin] = useState(null);
     const [loading, setLoading] = useState(true)
     const [loadingClass, setLoadingClass] = useState('')
+    const [component, setComponent] = useState(<Dashboard></Dashboard>)
 
     useEffect(() => {
         setLoading(true)
@@ -67,9 +67,9 @@ const Admin = () => {
                 <ThemeProvider theme={theme}>
                     <CssBaseline/>
                     <div className={"admin-container"}>
-                        <MySidebar isSidebar={isSidebar}></MySidebar>
-                        <div className={"content-container flex flex-col justify-center"}>
-                            <Dashboard></Dashboard>
+                        <MySidebar component={component} setComponent={setComponent}></MySidebar>
+                        <div className={"content-container flex flex-col"}>
+                            {component}
                         </div>
                     </div>
                 </ThemeProvider>

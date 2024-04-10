@@ -1,4 +1,4 @@
-package com.the_herd.backend.dto;
+package com.the_herd.backend.dto.requests;
 
 import lombok.Data;
 
