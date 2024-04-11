@@ -45,7 +45,6 @@ const MySidebar = ({component, setComponent}) => {
             try {
                 const response = await fetch(nextConfig.env.apiUrl + "/api/admin/getAdminData", {
                     method: "GET",
-                    credentials: "include",
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")
                     }
