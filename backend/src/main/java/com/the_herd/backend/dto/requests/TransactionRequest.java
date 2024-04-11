@@ -13,5 +13,5 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionRequest {
-    private double sum;
+    private String sum;
 }
