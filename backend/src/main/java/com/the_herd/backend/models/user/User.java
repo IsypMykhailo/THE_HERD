@@ -1,5 +1,6 @@
 package com.the_herd.backend.models.user;
 
+import com.the_herd.backend.models.Transaction;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

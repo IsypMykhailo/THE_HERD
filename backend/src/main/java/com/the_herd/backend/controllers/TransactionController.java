@@ -37,7 +37,7 @@ public class TransactionController {
             UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
             User user = userRepo.findById(userDetails.getId()).orElse(null);
             Transaction transaction = new Transaction();
-            transaction.setSum(request.getSum());
+            transaction.setSum(Double.parseDouble(request.getSum()));
             transaction.setTransactionDate(LocalDateTime.now());
             transaction.setUser(user);
             transactionRepo.save(transaction);

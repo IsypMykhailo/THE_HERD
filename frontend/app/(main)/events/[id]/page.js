@@ -18,6 +18,7 @@ const EventPage = ({params}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [guestList, setGuestList] = useState([]);
     const [isEventPassed, setIsEventPassed] = useState(false)
+    const [existTicket, setExistTicket] = useState(false)
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -48,6 +49,24 @@ const EventPage = ({params}) => {
             }
         };
 
+        const fetchMyTicket = async () => {
+            try {
+                const response = await fetch(nextConfig.env.apiUrl + '/api/ticket/get/event/' + eventId, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem("token")
+                    },
+                })
+                if(!response.ok) {
+                    throw new Error(response.statusText)
+                }
+
+                setExistTicket(true)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
         fetchGuests();
 
     }, [id]);
@@ -62,7 +81,7 @@ const EventPage = ({params}) => {
 
     useEffect(() => {
         setLoading(false)
-    }, [isEventPassed]);
+    }, [isEventPassed, existTicket]);
 
     return (
         <div>
@@ -108,7 +127,7 @@ const EventPage = ({params}) => {
                                     <button onClick={() => router.push(`/events/${id}/tickets/pay`)} className={'event-btn p-3 px-10'} disabled={isEventPassed} style={isEventPassed ? {opacity: 0.7} : {}}>
                                         Buy tickets
                                     </button>
-                                    <button className={'event-btn p-3 px-10'} onClick={() => router.push(`/events/${id}/tickets`)}>
+                                    <button className={'event-btn p-3 px-10'} disabled={!existTicket} style={existTicket ? {} : {opacity: 0.7}} onClick={() => router.push(`/events/${id}/tickets`)}>
                                         Show my ticket
                                     </button>
                                 </div>

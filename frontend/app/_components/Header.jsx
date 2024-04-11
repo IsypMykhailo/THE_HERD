@@ -37,6 +37,7 @@ const Header = () => {
                 if (response.status === 200) {
                     setIsLoggedIn(true)
                 } else {
+                    localStorage.removeItem("token");
                     setIsLoggedIn(false)
                 }
             } catch (error) {
