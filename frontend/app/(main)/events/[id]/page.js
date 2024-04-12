@@ -51,7 +51,7 @@ const EventPage = ({params}) => {
 
         const fetchMyTicket = async () => {
             try {
-                const response = await fetch(nextConfig.env.apiUrl + '/api/ticket/get/event/' + eventId, {
+                const response = await fetch(nextConfig.env.apiUrl + '/api/ticket/get/event/' + id, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem("token")
