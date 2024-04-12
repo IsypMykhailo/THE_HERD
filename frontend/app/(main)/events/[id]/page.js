@@ -68,7 +68,7 @@ const EventPage = ({params}) => {
         }
 
         fetchGuests();
-
+        fetchMyTicket();
     }, [id]);
 
     useEffect(() => {
