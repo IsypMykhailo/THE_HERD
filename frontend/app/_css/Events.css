@@ -17,6 +17,7 @@
     box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px;
     transition: 0.3s;
     cursor: pointer;
+    aspect-ratio: 3/4;
 }
 
 .event-label {
@@ -50,7 +51,8 @@
 .event-poster {
     height: 70%;
     width: auto;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: top center;
     /*aspect-ratio: 1/1;*/
 }
 
