@@ -27,8 +27,8 @@ const Event = ({events}) => {
     return (
         <div ref={containerRef} className='xl:h-[200vh] relative'>
             <div ref={eventRef} className={'events-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen'}>
-                {events.map((el, index) => (
-                    <Link key={index} href={`/events/${el.eventId}`} className={'event-entity m-10 xl:my-20 hover:xl:my-14'}>
+                {events.toReversed().map((el, index) => (
+                    <Link key={index} href={`/events/${el.eventId}`} className={'event-entity m-10 scale-100 hover:scale-105 transition-all'}>
                         <Image
                             src={el.eventPoster}
                             alt={`Image ${el.eventId}`}
