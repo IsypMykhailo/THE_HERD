@@ -6,12 +6,30 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import {formatDate, formatTime} from "@/app/_utils/parseUtils";
-import {AspectRatio} from "@/app/_components/ui/aspect-ratio"
+import nextConfig from "@/next.config.mjs";
 
-const Event = ({events}) => {
+const EventsList = () => {
     const containerRef = useRef(null)
     const eventRef = useRef(null)
-    const reversedEvents = events.reverse()
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        fetch(nextConfig.env.apiUrl + '/api/events/get/all')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response failed');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setEvents(data.reverse());
+                console.log(data)
+            })
+            .catch((error) => {
+                console.error("Fetching blogs failed: ", error);
+            });
+    }, []);
+
     useEffect(() => {
         if (!containerRef.current || !eventRef.current) return
         ScrollTrigger.create({
@@ -29,7 +47,7 @@ const Event = ({events}) => {
     return (
         <div ref={containerRef} className='xl:h-[200vh] relative'>
             <div ref={eventRef} className={'events-container xl:fixed xl:top-0 xl:left-0 w-screen xl:h-screen'}>
-                {reversedEvents.map((el, index) => (
+                { events && events.map((el, index) => (
                     <Link key={index} href={`/events/${el.eventId}`}
                           className={'event-entity m-10 scale-100 hover:scale-105 transition-all'}>
                         <Image
@@ -61,4 +79,4 @@ const Event = ({events}) => {
     );
 }
 
-export default Event;
+export default EventsList;
