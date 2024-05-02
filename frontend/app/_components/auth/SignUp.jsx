@@ -1,21 +1,18 @@
 'use client'
 
-import React from 'react';
+import React, {useState} from 'react';
 import '../../_css/Auth.css';
+import nextConfig from "@/next.config.mjs";
+import {useRouter} from "next/navigation";
 
 
 const SignUp = ({
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    setFirstName,
-                    setLastName,
-                    setEmail,
-                    setPassword,
-                    handleRegister,
                     setIsLogin
                 }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [isSubmitDisabled, setIsSubmitDisabled] = React.useState(true);
     React.useEffect(() => {
         const emailField = document.getElementById('email');
@@ -23,6 +20,36 @@ const SignUp = ({
         const isFormValid = firstName !== '' && lastName !== '' && email !== '' && password !== '' && emailField.validity.valid && passwordField.validity.valid;
         setIsSubmitDisabled(!isFormValid);
     }, [firstName, lastName, email, password]);
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const apiUrl = nextConfig.env.apiUrl + '/api/auth/signup';
+
+        const payload = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.status === 200) {
+                setIsLogin(true)
+            } else {
+                console.error('Failed to register', await response.text());
+            }
+        } catch (error) {
+            console.error('Failed to register', error);
+        }
+    };
 
     return (
         <form onSubmit={handleRegister} className={"form max-w-[560px]"}>

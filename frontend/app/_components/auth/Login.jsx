@@ -1,14 +1,50 @@
 'use client'
 
-import React from 'react';
+import React, {useState} from 'react';
+import nextConfig from "@/next.config.mjs";
+import {useRouter} from "next/navigation";
 
-const Login = ({email, password, setEmail, setPassword, handleLogin, setIsLogin}) => {
+const Login = ({setIsLogin}) => {
+    const router = useRouter()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [isSubmitDisabled, setIsSubmitDisabled] = React.useState(true);
     React.useEffect(() => {
         const emailField = document.getElementById('email');
         const isFormValid = email !== '' && password !== '' && emailField.validity.valid;
         setIsSubmitDisabled(!isFormValid);
     }, [email, password]);
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const apiUrl = nextConfig.env.apiUrl + '/api/auth/signin';
+
+        const payload = {
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                localStorage.setItem("token", data.token);
+                router.push("/");
+            } else {
+                console.error('Failed to login', await response.text());
+            }
+        } catch (error) {
+            console.error('Failed to login', error);
+        }
+    };
+
     return (
         <form onSubmit={handleLogin} className={"form max-w-[560px]"}>
             <div className={"my-6 mx-3"}>
