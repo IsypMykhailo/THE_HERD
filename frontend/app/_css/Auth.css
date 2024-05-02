@@ -5,15 +5,24 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 .sign-up-div {
     width: 50%;
     height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .form {
     width: 50%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .title {
@@ -31,11 +40,13 @@
     top: 30px;
     left: 30px;
     cursor: pointer;
-    transition: 0.2s;
+    -webkit-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    transition: opacity 0.2s;
 }
 
 .company-name:hover {
-    opacity: 70%;
+    opacity: 0.7; /* Corrected for standard opacity value */
 }
 
 .text {
@@ -61,6 +72,10 @@
     border-width: 0.5px;
     border-color: rgba(253, 254, 255, 0.05);
     border-radius: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none; /* Removes default focus outline in Firefox/Safari */
 }
 
 .form-input::placeholder {
@@ -73,6 +88,7 @@
     border-color: rgba(139, 60, 126, 0.05);
     color: #fdfeff;
     border-radius: 0;
+    -webkit-appearance: none; /* For iOS */
 }
 
 .btn-submit:hover, .btn-submit:disabled {
@@ -89,8 +105,8 @@
 }
 
 @media (max-width: 1300px){
-    .party-image{
-        display:none;
+    .party-image {
+        display: none;
     }
 
     .party-image-parent {
@@ -110,6 +126,7 @@
     .form {
         width: 80%;
     }
+
     .title {
         font-size: 2rem;
     }
