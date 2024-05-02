@@ -15,7 +15,7 @@ export default function AuthForm() {
     useEffect(() => {
         const validateSession = async () => {
             try {
-                if(localStorage.getItem("token") != null) {
+                if (localStorage.getItem("token") != null) {
                     const response = await fetch(nextConfig.env.apiUrl + "/api/auth/validateSession", {
                         method: 'POST',
                         credentials: 'include',
@@ -35,31 +35,36 @@ export default function AuthForm() {
                 }
             } catch (error) {
                 console.error('Failed to validate session', error);
+            } finally {
+                setLoadingClass('hidden')
+                const timer = setTimeout(() => setLoading(false), 500);
+                clearTimeout(timer)
             }
         }
         validateSession()
     }, [router]);
-    return loading ? (
-        <Loading loadingClass={loadingClass}/>
-    ) : (
-        <div
-            className={"w-full flex flex-col justify-center items-center sign-up-div"}>
-            <div className={"text-center text-5xl py-10"}>
+    return (
+            <div
+                className={"w-full flex flex-col justify-center items-center sign-up-div"}>
+                {loading && (
+                    <Loading loadingClass={loadingClass}/>
+                )}
+                <div className={"text-center text-5xl py-10"}>
+                    {isLogin ?
+                        <h1 className={"title"}>Login</h1>
+                        :
+                        <h1 className={"title"}>Sign Up</h1>
+                    }
+                </div>
                 {isLogin ?
-                    <h1 className={"title"}>Login</h1>
+                    <Login
+                        setIsLogin={setIsLogin}
+                    />
                     :
-                    <h1 className={"title"}>Sign Up</h1>
+                    <SignUp
+                        setIsLogin={setIsLogin}
+                    />
                 }
             </div>
-            {isLogin ?
-                <Login
-                    setIsLogin={setIsLogin}
-                />
-                :
-                <SignUp
-                    setIsLogin={setIsLogin}
-                />
-            }
-        </div>
     )
 }
