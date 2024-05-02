@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useState} from "react";
+import '@/app/_css/Pay.css'
 
 const Tiers = ({tiers, setAmount, setIsTierChosen, tierId, setTierId}) => {
     const [selectedTier, setSelectedTier] = useState(tiers[0])
@@ -12,16 +13,18 @@ const Tiers = ({tiers, setAmount, setIsTierChosen, tierId, setTierId}) => {
     return (
         <div className={"form max-w-[560px]"}>
             {tiers.map((tier, index) => (
-                <label key={index} className={"my-6 mx-3 flex flex-row form-input"} for={`tier ${index}`}>
+                <label key={index} className={`my-6 mx-3 flex flex-row items-center form-input ${selectedTier === tier ? 'selected' : ''}`}
+                       for={`tier ${index}`}>
                     <input
                         id={`tier ${index}`}
                         type={"radio"}
                         value={selectedTier}
                         onChange={() => setSelectedTier(tier)}
                         required={true}
-                        className={'mr-3'}
+                        className={'mr-3 flex flex-col justify-center'}
+                        name={'tiers'}
                     />
-                    <div>{tier.name} (${tier.price})</div>
+                    <div className={`text-[1rem] flex flex-row items-center transition-[0.2s] ${selectedTier === tier ? 'selected' : ''}`}>{tier.name} (${tier.price})</div>
                 </label>
             ))}
             <div className={"text-center my-6 mx-3 flex flex-col"}>
@@ -29,7 +32,8 @@ const Tiers = ({tiers, setAmount, setIsTierChosen, tierId, setTierId}) => {
                     setAmount(selectedTier.price)
                     setIsTierChosen(true)
                     setTierId(selectedTier.id)
-                }}>Make Payment</button>
+                }}>Make Payment
+                </button>
             </div>
         </div>
     )
